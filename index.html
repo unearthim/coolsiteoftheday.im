@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <!-- SEO Optimization (as requested) -->
+    <!-- SEO Optimization -->
     <title id="page-title">Cool Site of the Day | Digital Monument</title>
     <meta name="description" content="A minimalist digital monument showcasing the coolest website of the day. Discover groundbreaking web design and development, updated in real-time.">
     <meta name="keywords" content="cool site of the day, web design, minimalist website, site showcase, best websites, daily website, digital monument, realtime update">
@@ -111,16 +111,32 @@
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
         import { getAuth, signInAnonymously, signInWithCustomToken } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
-        import { getFirestore, doc, onSnapshot, setDoc, setLogLevel } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+        import { getFirestore, doc, onSnapshot, setLogLevel } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
 
         // IMPORTANT: Global variables provided by the Canvas environment
         const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
-        const firebaseConfig = JSON.parse(typeof __firebase_config !== 'undefined' ? __firebase_config : '{}');
+        
+        // --- START DEBUG FALLBACK ---
+        // If the environment variables are not injected (e.g., local testing or failed injection), 
+        // the app uses this hardcoded config.
+        const firebaseConfigRaw = typeof __firebase_config !== 'undefined' ? __firebase_config : '{}';
+        
+        // Jojo's jojo-4b593 project configuration inserted here:
+        const firebaseConfig = firebaseConfigRaw === '{}' ? {
+            apiKey: "AIzaSyAEU3QcCzu4ZmwJpHhogu1hMpyRp2swUz8",
+            authDomain: "jojo-4b593.firebaseapp.com",
+            projectId: "jojo-4b593",
+            storageBucket: "jojo-4b593.firebasestorage.app",
+            messagingSenderId: "353107431611",
+            appId: "1:353107431611:web:8ac816593d8fe0eb44599e",
+            measurementId: "G-CYGZ7C37JK"
+        } : JSON.parse(firebaseConfigRaw);
+
         const initialAuthToken = typeof __initial_auth_token !== 'undefined' ? __initial_auth_token : null;
+        // --- END DEBUG FALLBACK ---
 
         // UI elements
         const contentDisplay = document.getElementById('content-display');
-        const loadingSpinner = document.getElementById('loading-spinner');
         const siteTitleEl = document.getElementById('site-title');
         const siteDateEl = document.getElementById('site-date');
         const siteLinkEl = document.getElementById('site-link');
@@ -141,9 +157,10 @@
             }
         }
 
+        // FIX: Renamed and converted to anonymous function to prevent declaration conflicts (SyntaxError)
         // Main Initialization and Listener
-        async function initializeAppAndListen() {
-            if (Object.keys(firebaseConfig).length === 0) {
+        const initializeAppAndListen = async () => {
+            if (Object.keys(firebaseConfig).length === 0 || !firebaseConfig.projectId) {
                 console.error("Firebase configuration is missing.");
                 // Display placeholder or error state
                 contentDisplay.innerHTML = `<div class="text-red-500">Firebase configuration error. Cannot load site data.</div>`;
@@ -163,11 +180,13 @@
                     await signInAnonymously(auth);
                 }
                 const userId = auth.currentUser?.uid || crypto.randomUUID();
-                console.log(`Authenticated as user: ${userId}`);
+                // Ensure we use the correct App ID from the environment or configuration
+                const currentAppId = firebaseConfig.projectId || appId;
+                console.log(`Authenticated as user: ${userId}, Project ID: ${currentAppId}`);
                 
                 // 2. Define the target document reference
                 // This targets the public document written by your Firebase Function
-                const todayDocPath = `artifacts/${appId}/public/data/daily_site/today`;
+                const todayDocPath = `artifacts/${currentAppId}/public/data/daily_site/today`;
                 const todayDocRef = doc(db, todayDocPath);
 
                 // 3. Set up the real-time listener
@@ -209,7 +228,7 @@
                         // Handle case where the 'today' document doesn't exist yet (e.g., first run)
                         siteTitleEl.textContent = 'Awaiting First Site';
                         siteDateEl.textContent = 'Preparing Monument';
-                        curatorNoteEl.textContent = 'The system is ready, waiting for the first daily update to seed the content.';
+                        curatorNoteEl.textContent = 'The system is ready, waiting for the automated daily update to seed the content.';
                         siteLinkEl.href = '#';
 
                         contentDisplay.innerHTML = `<div class="p-8 text-center text-gray-500 rounded-lg border-2 border-dashed border-gray-700">

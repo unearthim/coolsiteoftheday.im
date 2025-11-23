@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- SEO Optimization -->
+    <title id="page-title">Cool Site of the Day | Digital Monument</title>
+    <meta name="description" content="A minimalist digital monument showcasing the coolest website of the day. Discover groundbreaking web design and development, updated in real-time.">
+    <meta name="keywords" content="cool site of the day, web design, minimalist website, site showcase, best websites, daily website, digital monument, realtime update">
+    <meta property="og:title" content="Cool Site of the Day">
+    <meta property="og:description" content="Discover today's groundbreaking web design.">
+    <meta property="og:type" content="website">
+
+    <!-- Tailwind CSS and Font -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet">
+    
+    <style>
+        /* General dark mode and Inter font setup */
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #0d0d0d; /* Deep charcoal background */
+            color: #f7f7f7; /* Near-white text */
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 1rem;
+        }
+
+        /* The central focus area for the site and meta data */
+        .monolith-container {
+            width: 100%;
+            max-width: 1400px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            flex-grow: 1;
+        }
+
+        /* The featured site iframe */
+        .site-iframe {
+            width: 100%;
+            /* Calculated height for a large, responsive block */
+            height: calc(100vh - 200px); 
+            min-height: 500px; 
+            border: 2px solid #333;
+            border-radius: 12px;
+            transition: all 0.3s ease-in-out;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            background-color: #1a1a1a; /* Background for when iframe is loading */
+        }
+        
+        /* Loading spinner styling */
+        .loader {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #5a67d8; /* Indigo color for spinner */
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body class="antialiased">
+
+    <div class="monolith-container">
+        
+        <!-- HEADER / METADATA -->
+        <header class="w-full flex justify-between items-end p-4 mb-4 border-b border-gray-700">
+            <div class="flex flex-col">
+                <h1 class="text-3xl sm:text-4xl font-extrabold tracking-tight">
+                    COOL SITE OF THE DAY
+                </h1>
+                <p id="curator-note" class="text-sm text-gray-400 mt-1 italic transition-opacity duration-500">
+                    Loading curator's note...
+                </p>
+            </div>
+            <div class="text-right">
+                <p id="site-date" class="text-lg font-mono text-gray-300">
+                    -- / --
+                </p>
+                <a id="site-link" target="_blank" href="#" 
+                   class="text-sm text-indigo-400 hover:text-indigo-300 transition-colors duration-200"
+                   aria-label="Visit today's featured site">
+                    <span id="site-title">Site Title</span> &rarr;
+                </a>
+            </div>
+        </header>
+
+        <!-- MAIN FEATURE AREA -->
+        <main class="w-full flex-grow flex items-center justify-center">
+            <!-- Iframe or Loading Indicator -->
+            <div id="content-display" class="w-full h-full flex items-center justify-center">
+                <div class="loader" id="loading-spinner"></div>
+            </div>
+        </main>
+    </div>
+
+    <!-- FOOTER -->
+    <footer class="mt-8 mb-4 text-center text-sm text-gray-500">
+        <p>A Digital Monument powered by Firebase & Real-time Curation.</p>
+    </footer>
+
+    <!-- Firebase Imports -->
+    <script type="module">
+        // FIX: Using an older, stable SDK version (v9.1.0) to bypass the webauthn.js TypeError
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.1.0/firebase-app.js";
+        import { getAuth, signInAnonymously, signInWithCustomToken } from "https://www.gstatic.com/firebasejs/9.1.0/firebase-auth.js";
+        import { getFirestore, doc, onSnapshot, setLogLevel } from "https://www.gstatic.com/firebasejs/9.1.0/firebase-firestore.js";
+
+        // IMPORTANT: Global variables provided by the Canvas environment
+        const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
+        
+        // --- START DEBUG FALLBACK ---
+        // Hardcoded Firebase configuration to bypass environment injection errors
+        const firebaseConfigRaw = typeof __firebase_config !== 'undefined' ? __firebase_config : '{}';
+        
+        // Jojo's jojo-4b593 project configuration inserted here:
+        const firebaseConfig = firebaseConfigRaw === '{}' ? {
+            apiKey: "AIzaSyAEU3QcCzu4ZmwJpHhogu1hMpyRp2swUz8",
+            authDomain: "jojo-4b593.firebaseapp.com",
+            projectId: "jojo-4b593",
+            storageBucket: "jojo-4b593.firebasestorage.app",
+            messagingSenderId: "353107431611",
+            appId: "1:353107431611:web:8ac816593d8fe0eb44599e",
+            measurementId: "G-CYGZ7C37JK"
+        } : JSON.parse(firebaseConfigRaw);
+
+        const initialAuthToken = typeof __initial_auth_token !== 'undefined' ? __initial_auth_token : null;
+        // --- END DEBUG FALLBACK ---
+
+        // UI elements
+        const contentDisplay = document.getElementById('content-display');
+        const siteTitleEl = document.getElementById('site-title');
+        const siteDateEl = document.getElementById('site-date');
+        const siteLinkEl = document.getElementById('site-link');
+        const curatorNoteEl = document.getElementById('curator-note');
+        const pageTitleEl = document.getElementById('page-title');
+
+        // Function to format the date string (YYYY-MM-DD to Month Day, Year)
+        function formatDate(dateString) {
+            try {
+                const date = new Date(dateString + 'T00:00:00'); // Ensure UTC neutrality
+                return date.toLocaleDateString('en-US', { 
+                    year: 'numeric', 
+                    month: 'long', 
+                    day: 'numeric' 
+                });
+            } catch (e) {
+                return dateString || '-- / --';
+            }
+        }
+
+        // Main Initialization and Listener
+        const initializeAppAndListen = async () => {
+            // FIX: Forces the use of the hardcoded projectId, bypassing environment conflicts
+            const currentAppId = firebaseConfig.projectId;
+
+            if (Object.keys(firebaseConfig).length === 0 || !currentAppId) {
+                console.error("Firebase configuration is missing.");
+                contentDisplay.innerHTML = `<div class="text-red-500">Firebase configuration error. Cannot load site data.</div>`;
+                return;
+            }
+
+            try {
+                // setLogLevel('Debug'); // Uncomment for debugging
+                const app = initializeApp(firebaseConfig);
+                const db = getFirestore(app);
+                const auth = getAuth(app);
+
+                // 1. Authenticate the user
+                if (initialAuthToken) {
+                    await signInWithCustomToken(auth, initialAuthToken);
+                } else {
+                    await signInAnonymously(auth);
+                }
+                const userId = auth.currentUser?.uid || crypto.randomUUID();
+                console.log(`Authenticated as user: ${userId}, Project ID: ${currentAppId}`);
+                
+                // 2. Define the target document reference
+                // This targets the public document written by your Firebase Function
+                const todayDocPath = `artifacts/${currentAppId}/public/data/daily_site/today`;
+                const todayDocRef = doc(db, todayDocPath);
+
+                // 3. Set up the real-time listener
+                onSnapshot(todayDocRef, (docSnapshot) => {
+                    if (docSnapshot.exists()) {
+                        const data = docSnapshot.data();
+                        
+                        // Update UI elements
+                        const title = data.siteTitle || 'Featured Site';
+                        const url = data.siteUrl || 'about:blank';
+                        const note = data.curatorNote || 'A new discovery in digital design.';
+                        const date = data.date || 'Unknown Date';
+                        
+                        siteTitleEl.textContent = title;
+                        siteDateEl.textContent = formatDate(date);
+                        curatorNoteEl.textContent = note;
+                        siteLinkEl.href = url;
+                        pageTitleEl.textContent = `Cool Site of the Day: ${title}`;
+
+                        // Create/Update the Iframe
+                        let iframe = document.getElementById('featured-iframe');
+                        if (!iframe) {
+                            // Create the iframe if it doesn't exist
+                            iframe = document.createElement('iframe');
+                            iframe.id = 'featured-iframe';
+                            iframe.className = 'site-iframe';
+                            iframe.frameBorder = '0';
+                            iframe.title = title;
+                            
+                            // Remove spinner and add iframe
+                            contentDisplay.innerHTML = '';
+                            contentDisplay.appendChild(iframe);
+                        }
+                        
+                        // Update the iframe source
+                        iframe.src = url;
+
+                    } else {
+                        // Handle case where the 'today' document doesn't exist yet (e.g., first run)
+                        siteTitleEl.textContent = 'Awaiting First Site';
+                        siteDateEl.textContent = 'Preparing Monument';
+                        curatorNoteEl.textContent = 'The system is ready, waiting for the automated daily update to seed the content.';
+                        siteLinkEl.href = '#';
+
+                        contentDisplay.innerHTML = `<div class="p-8 text-center text-gray-500 rounded-lg border-2 border-dashed border-gray-700">
+                                <p class="text-xl font-semibold">Monument Standby</p>
+                                <p class="mt-2">The database is configured. Awaiting the automated daily update to feature the first site.</p>
+                            </div>`;
+                    }
+                }, (error) => {
+                    console.error("Error listening to Firestore:", error);
+                    // This error is the permissions issue, even if we fixed the rules.
+                    contentDisplay.innerHTML = `<div class="text-red-500">Connection Error (Permissions or Rules). Please check console.</div>`;
+                });
+
+            } catch (error) {
+                console.error("Authentication or Firebase setup failed:", error);
+                contentDisplay.innerHTML = `<div class="text-red-500">Initialization failed. See console for details.</div>`;
+            }
+        }
+
+        // Start the application
+        window.onload = initializeAppAndListen;
+    </script>
+</body>
+</html>

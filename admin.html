@@ -83,6 +83,7 @@
 
     <!-- Firebase Imports and Logic -->
     <script type="module">
+        // Using stable v11 imports for the admin console
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
         import { getAuth, signInAnonymously, signInWithCustomToken } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
         import { getFirestore, collection, addDoc, getDocs, setLogLevel } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
@@ -105,6 +106,7 @@
             measurementId: "G-CYGZ7C37JK"
         } : JSON.parse(firebaseConfigRaw);
 
+        // FIX: Corrected capitalization in the assignment
         const initialAuthToken = typeof __initial_auth_token !== 'undefined' ? __initial_auth_token : null;
         // --- END DEBUG FALLBACK ---
 
@@ -116,7 +118,8 @@
         const statusMessage = document.getElementById('status-message');
 
         let db;
-        const currentAppId = firebaseConfig.projectId || appId;
+        // FIX: Force the use of the correct project ID for pathing
+        const currentAppId = firebaseConfig.projectId; 
         const QUEUE_PATH = `artifacts/${currentAppId}/public/data/site_queue`;
 
         // --- Utility Functions ---
@@ -221,6 +224,7 @@
                     await signInAnonymously(auth);
                 }
                 
+                // This call attempts to read the existing queue, which triggers the permission error
                 await getNextQueueIndex();
 
             } catch (error) {

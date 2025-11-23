@@ -109,16 +109,16 @@
 
     <!-- Firebase Imports -->
     <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
-        import { getAuth, signInAnonymously, signInWithCustomToken } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
-        import { getFirestore, doc, onSnapshot, setLogLevel } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+        // FIX: Using an older, stable SDK version (v9.1.0) to bypass the webauthn.js TypeError
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.1.0/firebase-app.js";
+        import { getAuth, signInAnonymously, signInWithCustomToken } from "https://www.gstatic.com/firebasejs/9.1.0/firebase-auth.js";
+        import { getFirestore, doc, onSnapshot, setLogLevel } from "https://www.gstatic.com/firebasejs/9.1.0/firebase-firestore.js";
 
         // IMPORTANT: Global variables provided by the Canvas environment
         const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
         
         // --- START DEBUG FALLBACK ---
-        // If the environment variables are not injected (e.g., local testing or failed injection), 
-        // the app uses this hardcoded config.
+        // Hardcoded Firebase configuration to bypass environment injection errors
         const firebaseConfigRaw = typeof __firebase_config !== 'undefined' ? __firebase_config : '{}';
         
         // Jojo's jojo-4b593 project configuration inserted here:
@@ -157,12 +157,13 @@
             }
         }
 
-        // FIX: Renamed and converted to anonymous function to prevent declaration conflicts (SyntaxError)
         // Main Initialization and Listener
         const initializeAppAndListen = async () => {
-            if (Object.keys(firebaseConfig).length === 0 || !firebaseConfig.projectId) {
+            // FIX: Forces the use of the hardcoded projectId, bypassing environment conflicts
+            const currentAppId = firebaseConfig.projectId;
+
+            if (Object.keys(firebaseConfig).length === 0 || !currentAppId) {
                 console.error("Firebase configuration is missing.");
-                // Display placeholder or error state
                 contentDisplay.innerHTML = `<div class="text-red-500">Firebase configuration error. Cannot load site data.</div>`;
                 return;
             }
@@ -180,8 +181,6 @@
                     await signInAnonymously(auth);
                 }
                 const userId = auth.currentUser?.uid || crypto.randomUUID();
-                // Ensure we use the correct App ID from the environment or configuration
-                const currentAppId = firebaseConfig.projectId || appId;
                 console.log(`Authenticated as user: ${userId}, Project ID: ${currentAppId}`);
                 
                 // 2. Define the target document reference
@@ -238,7 +237,8 @@
                     }
                 }, (error) => {
                     console.error("Error listening to Firestore:", error);
-                    contentDisplay.innerHTML = `<div class="text-red-500">Connection Error. Please check console.</div>`;
+                    // This error is the permissions issue, even if we fixed the rules.
+                    contentDisplay.innerHTML = `<div class="text-red-500">Connection Error (Permissions or Rules). Please check console.</div>`;
                 });
 
             } catch (error) {

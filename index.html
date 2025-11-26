@@ -3,455 +3,443 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cool Site of the Day Monument</title>
+
+    <!-- SEO Optimization -->
+    <title id="page-title">Cool Site of the Day | Digital Monument</title>
+    <meta name="description" content="A minimalist digital monument showcasing the coolest website of the day. Discover groundbreaking web design and development, updated in real-time.">
+    <meta name="keywords" content="cool site of the day, web design, minimalist website, site showcase, best websites, daily website, digital monument, realtime update">
+    <meta property="og:title" content="Cool Site of the Day">
+    <meta property="og:description" content="Discover today's groundbreaking web design.">
+    <meta property="og:type" content="website">
+
+    <!-- Tailwind CSS and Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
     
-    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
-    
-    <!-- Babel for JSX compilation in browser -->
-    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
-
-    <!-- Import Map to handle module naming clean-up -->
-    <script type="importmap">
-    {
-      "imports": {
-        "react": "https://esm.sh/react@18?dev",
-        "react-dom/client": "https://esm.sh/react-dom@18/client?dev",
-        "lucide-react": "https://esm.sh/lucide-react@0.263.1?dev"
-      }
-    }
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        'sans': ['Inter', 'sans-serif'],
+                        'mono': ['Space Mono', 'monospace'],
+                    }
+                }
+            }
+        }
     </script>
+    
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #0a0e27;
+            background-attachment: fixed;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+        
+        /* Ambient background animation with ripple effect */
+        .ambient-light {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            pointer-events: none;
+            z-index: -1;
+            background-image: 
+                radial-gradient(at 20% 30%, rgba(88, 28, 135, 0.2) 0px, transparent 50%),
+                radial-gradient(at 80% 70%, rgba(37, 99, 235, 0.2) 0px, transparent 50%),
+                radial-gradient(at 50% 50%, rgba(109, 40, 217, 0.15) 0px, transparent 50%);
+            animation: ambient-drift 10s ease-in-out infinite alternate, 
+                       ripple 8s ease-in-out infinite;
+        }
+
+        @keyframes ambient-drift {
+            0% { transform: scale(1); }
+            100% { transform: scale(1.1); }
+        }
+        
+        @keyframes ripple {
+            0%, 100% {
+                background-size: 100% 100%;
+                opacity: 0.8;
+            }
+            50% {
+                background-size: 120% 120%;
+                opacity: 1;
+            }
+        }
+        
+        .glass-morphism {
+            background: rgba(15, 23, 42, 0.6);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+        }
+        
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-8px); }
+            100% { transform: translateY(0px); }
+        }
+
+        .float-animation {
+            animation: float 6s ease-in-out infinite;
+        }
+        
+        .text-glow {
+            text-shadow: 0 0 40px rgba(139, 92, 246, 0.5);
+        }
+        
+        .loader {
+            border: 4px solid rgba(139, 92, 246, 0.1);
+            border-top: 4px solid #8b5cf6;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        @keyframes fade-in {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .animate-fade-in {
+            animation: fade-in 0.6s ease-out;
+        }
+        
+        @keyframes cosmic-glow {
+            0%, 100% { 
+                box-shadow: 0 0 30px rgba(139, 92, 246, 0.3),
+                            0 0 60px rgba(139, 92, 246, 0.15),
+                            0 0 90px rgba(139, 92, 246, 0.05),
+                            inset 0 0 30px rgba(139, 92, 246, 0.05);
+                border-color: rgba(139, 92, 246, 0.4);
+            }
+            50% { 
+                box-shadow: 0 0 40px rgba(139, 92, 246, 0.4),
+                            0 0 80px rgba(139, 92, 246, 0.2),
+                            0 0 120px rgba(139, 92, 246, 0.1),
+                            inset 0 0 40px rgba(139, 92, 246, 0.1);
+                border-color: rgba(139, 92, 246, 0.6);
+            }
+        }
+        
+        .cosmic-glow {
+            animation: cosmic-glow 4s ease-in-out infinite;
+        }
+        
+        .line-clamp-2 {
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+    </style>
 </head>
-<body class="bg-slate-50">
-    <div id="root"></div>
-
-    <script type="text/babel" data-type="module">
-        import React, { useState, useEffect } from 'react';
-        import { createRoot } from 'react-dom/client';
-        import { 
-            Globe, 
-            Calendar, 
-            ExternalLink, 
-            Trash2, 
-            Send, 
-            Lock, 
-            Unlock, 
-            History 
-        } from 'lucide-react';
-
-        // Firebase Imports (using the specific versions compatible with ES Modules in browser)
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-        import { 
-            getAuth, 
-            signInAnonymously, 
-            onAuthStateChanged, 
-            signInWithCustomToken 
-        } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
-        import { 
-            getFirestore, 
-            collection, 
-            addDoc, 
-            onSnapshot, 
-            deleteDoc, 
-            doc, 
-            serverTimestamp 
-        } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
-
-        // --- SEO Component ---
-        const SeoHeader = () => {
-            useEffect(() => {
-                document.title = "Cool Site of the Day Monument | coolsiteoftheday.im";
+<body class="antialiased">
+    <div class="ambient-light"></div>
+    
+    <div class="min-h-screen flex flex-col">
+        
+        <!-- Loading State -->
+        <div id="loading-state" class="flex-grow flex items-center justify-center">
+            <div class="loader"></div>
+        </div>
+        
+        <!-- Main Content (hidden initially) -->
+        <div id="main-content" class="hidden flex-grow flex flex-col p-6 lg:p-12 animate-fade-in">
+            
+            <!-- Header -->
+            <header class="w-full pb-6 mb-6 border-b border-slate-700/50">
+                <div class="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-4">
+                    <div class="flex items-center float-animation">
+                        <div class="relative mr-4">
+                            <div class="absolute inset-0 bg-gradient-to-r from-purple-600 to-blue-600 rounded-2xl blur-xl opacity-50"></div>
+                            <div class="relative bg-gradient-to-br from-purple-600 to-blue-600 p-3 rounded-2xl">
+                                <svg class="w-7 h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"></path>
+                                </svg>
+                            </div>
+                        </div>
+                        <h1 class="text-3xl lg:text-5xl font-black tracking-tight uppercase text-transparent bg-clip-text bg-gradient-to-r from-purple-300 to-blue-300 text-glow">
+                            Cool Site of the Day
+                        </h1>
+                    </div>
+                    
+                    <div class="text-left lg:text-right">
+                        <time id="site-date" class="text-sm font-mono text-slate-600 mb-2 block">Loading...</time>
+                        <a id="site-link" href="#" target="_blank" rel="noopener noreferrer" class="group inline-flex items-center space-x-2 transition-all duration-300">
+                            <span id="site-title" class="text-xl lg:text-2xl font-black tracking-tighter text-slate-100 group-hover:text-transparent group-hover:bg-clip-text group-hover:bg-gradient-to-r group-hover:from-purple-300 group-hover:to-blue-300">
+                                Site Title
+                            </span>
+                            <svg class="w-5 h-5 text-slate-400 group-hover:text-white group-hover:rotate-45 transition-all duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 17L17 7m0 0H7m10 0v10"></path>
+                            </svg>
+                        </a>
+                    </div>
+                </div>
                 
-                const metaTags = [
-                    { name: "description", content: "A daily digital monument curating the coolest sites on the web. One site, every day. A tribute to the early web." },
-                    { name: "keywords", content: "cool sites, daily link, web history, internet monument, microblog" },
-                    { property: "og:title", content: "Cool Site of the Day Monument" },
-                    { property: "og:description", content: "A daily digital monument curating the coolest sites on the web." },
-                    { property: "og:type", content: "website" }
-                ];
+                <p id="curator-note" class="text-slate-400 text-sm lg:text-base italic mt-4 glass-morphism rounded-lg p-4 border border-slate-700/30">
+                    Loading curator's note...
+                </p>
+            </header>
+            
+            <!-- Featured Site Screenshot -->
+            <main id="content-display" class="flex-grow w-full flex items-center justify-center">
+                <div class="w-full max-w-5xl">
+                    <div id="screenshot-container" class="relative rounded-xl overflow-hidden border-2 glass-morphism shadow-2xl cosmic-glow" style="height: 600px;">
+                        <!-- Screenshot will be inserted here -->
+                    </div>
+                </div>
+            </main>
+        </div>
 
-                metaTags.forEach(tag => {
-                    let element;
-                    if (tag.name) {
-                        element = document.querySelector(`meta[name="${tag.name}"]`);
-                    } else if (tag.property) {
-                        element = document.querySelector(`meta[property="${tag.property}"]`);
-                    }
+        <!-- Footer -->
+        <footer class="w-full px-6 py-8 border-t border-slate-800/50 text-center">
+            <p class="text-slate-600 text-sm font-mono mb-2">
+                © <span id="current-year"></span> coolsiteoftheday.im
+            </p>
+            <p class="text-slate-700 text-xs">
+                A digital monument powered by Firebase & automated curation
+            </p>
+        </footer>
+    </div>
 
-                    if (!element) {
-                        element = document.createElement('meta');
-                        if (tag.name) element.setAttribute('name', tag.name);
-                        if (tag.property) element.setAttribute('property', tag.property);
-                        document.head.appendChild(element);
-                    }
-                    element.setAttribute('content', tag.content);
-                });
-            }, []);
+    <!-- Firebase Imports -->
+    <script type="module">
+        // FIX: Using an older, stable SDK version (v9.1.0) to bypass the webauthn.js TypeError
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.1.0/firebase-app.js";
+        import { getAuth, signInAnonymously, signInWithCustomToken } from "https://www.gstatic.com/firebasejs/9.1.0/firebase-auth.js";
+        import { getFirestore, doc, onSnapshot, collection, query, orderBy, limit as firestoreLimit, setLogLevel } from "https://www.gstatic.com/firebasejs/9.1.0/firebase-firestore.js";
 
-            return null;
-        };
-
-        // --- Firebase Configuration ---
-        // Your personal configuration for project: jojo-4b593
-        const firebaseConfig = {
+        // IMPORTANT: Global variables provided by the Canvas environment
+        const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
+        
+        // --- START DEBUG FALLBACK ---
+        // Hardcoded Firebase configuration to bypass environment injection errors
+        const firebaseConfigRaw = typeof __firebase_config !== 'undefined' ? __firebase_config : '{}';
+        
+        // Jojo's jojo-4b593 project configuration inserted here:
+        const firebaseConfig = firebaseConfigRaw === '{}' ? {
             apiKey: "AIzaSyAEU3QcCzu4ZmwJpHhogu1hMpyRp2swUz8",
             authDomain: "jojo-4b593.firebaseapp.com",
             projectId: "jojo-4b593",
             storageBucket: "jojo-4b593.firebasestorage.app",
             messagingSenderId: "353107431611",
-            appId: "1:353107431611:web:e727900cec519d1144599e",
-            measurementId: "G-S3LZY800T3"
-        };
+            appId: "1:353107431611:web:8ac816593d8fe0eb44599e",
+            measurementId: "G-CYGZ7C37JK"
+        } : JSON.parse(firebaseConfigRaw);
 
-        // Initialize Firebase
-        const app = initializeApp(firebaseConfig);
-        const auth = getAuth(app);
-        const db = getFirestore(app);
-        // Note: When running as a pure HTML file, we don't use the preview environment's appId
-        // We use a static identifier for the collection path to keep it consistent.
-        const appId = 'coolsite-monument-v1';
+        const initialAuthToken = typeof __initial_auth_token !== 'undefined' ? __initial_auth_token : null;
+        // --- END DEBUG FALLBACK ---
 
-        // --- Helper Component: Post Card ---
-        const PostCard = ({ post, isToday, isEditor, onDelete }) => {
-            return (
-                <article 
-                    className={`group bg-white rounded-xl p-6 shadow-sm hover:shadow-md transition-all border relative overflow-hidden ${
-                        isToday ? 'border-blue-200 ring-4 ring-blue-50/50' : 'border-slate-200'
-                    }`}
-                >
-                    {/* Decorative timestamp line */}
-                    <div className={`absolute left-0 top-0 bottom-0 w-1 transition-colors ${isToday ? 'bg-blue-500' : 'bg-slate-100 group-hover:bg-slate-300'}`}></div>
-                    
-                    <div className="pl-3">
-                        <div className="flex justify-between items-start mb-3">
-                            <div className="flex items-center space-x-2 text-slate-500 text-xs font-medium uppercase tracking-wider">
-                                <Calendar className="w-3 h-3" />
-                                <time dateTime={post.dateString}>
-                                    {new Date(post.dateString).toLocaleDateString('en-US', { 
-                                        weekday: 'long', 
-                                        year: 'numeric', 
-                                        month: 'long', 
-                                        day: 'numeric',
-                                        timeZone: 'UTC' 
-                                    })}
-                                </time>
-                                {/* Today Badge */}
-                                {isToday && (
-                                    <span className="bg-blue-100 text-blue-600 px-2 py-0.5 rounded-full text-[10px] font-bold flex items-center">
-                                        <span className="w-1.5 h-1.5 bg-blue-600 rounded-full mr-1 animate-pulse"></span>
-                                        Current Pick
-                                    </span>
-                                )}
-                            </div>
-                            
-                            {isEditor && (
-                                <button 
-                                    onClick={() => onDelete(post.id)}
-                                    className="text-slate-300 hover:text-red-500 transition-colors p-1"
-                                    title="Delete Entry"
-                                >
-                                    <Trash2 className="w-4 h-4" />
-                                </button>
-                            )}
-                        </div>
-
-                        <h3 className="text-xl font-bold text-slate-900 mb-2 group-hover:text-blue-600 transition-colors">
-                            <a href={post.url} target="_blank" rel="noopener noreferrer" className="flex items-center">
-                                {post.title}
-                                <ExternalLink className="w-4 h-4 ml-2 opacity-50" />
-                            </a>
-                        </h3>
-
-                        <p className="text-slate-600 leading-relaxed mb-4 whitespace-pre-wrap">{post.content}</p>
-
-                        <div className="flex items-center">
-                            <a 
-                                href={post.url} 
-                                target="_blank" 
-                                rel="noopener noreferrer"
-                                className="inline-flex items-center text-sm font-medium text-blue-600 hover:text-blue-800 transition-colors"
-                            >
-                                Visit Site
-                                <span className="ml-1">→</span>
-                            </a>
-                        </div>
-                    </div>
-                </article>
-            );
-        };
-
-        // --- Main App Component ---
-        function App() {
-            const [user, setUser] = useState(null);
-            const [posts, setPosts] = useState([]);
-            const [loading, setLoading] = useState(true);
-            const [isEditor, setIsEditor] = useState(false); 
-            
-            // Form State
-            const [siteTitle, setSiteTitle] = useState('');
-            const [siteUrl, setSiteUrl] = useState('');
-            const [commentary, setCommentary] = useState('');
-            const [error, setError] = useState('');
-
-            // --- Auth & Data Init ---
-            useEffect(() => {
-                const initAuth = async () => {
-                    try {
-                        await signInAnonymously(auth);
-                    } catch (err) {
-                        console.error("Auth failed:", err);
-                    }
-                };
-
-                initAuth();
-                const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
-                    setUser(currentUser);
-                });
-                return () => unsubscribe();
-            }, []);
-
-            const getTodayString = () => {
-                const d = new Date();
-                const year = d.getFullYear();
-                const month = String(d.getMonth() + 1).padStart(2, '0');
-                const day = String(d.getDate()).padStart(2, '0');
-                return `${year}-${month}-${day}`;
-            };
-
-            // --- Fetch Posts ---
-            useEffect(() => {
-                if (!user) return;
-
-                const collectionRef = collection(db, 'artifacts', appId, 'public', 'data', 'daily_sites');
-                
-                const unsubscribe = onSnapshot(collectionRef, (snapshot) => {
-                    const fetchedPosts = snapshot.docs.map(doc => ({
-                        id: doc.id,
-                        ...doc.data()
-                    }));
-                    
-                    const sortedPosts = fetchedPosts.sort((a, b) => {
-                        const dateA = new Date(a.dateString || 0);
-                        const dateB = new Date(b.dateString || 0);
-                        return dateB - dateA;
-                    });
-
-                    setPosts(sortedPosts);
-                    setLoading(false);
-                }, (err) => {
-                    console.error("Firestore error:", err);
-                    setError("Failed to load the monument.");
-                    setLoading(false);
-                });
-
-                return () => unsubscribe();
-            }, [user]);
-
-            const todayString = getTodayString();
-            const todaysPost = posts.find(p => p.dateString === todayString);
-            const pastPosts = posts.filter(p => p.dateString !== todayString);
-            const hasPostForToday = !!todaysPost;
-
-            const handlePost = async (e) => {
-                e.preventDefault();
-                if (!user) return;
-                
-                if (hasPostForToday) {
-                    setError("A monument entry for today already exists.");
-                    return;
-                }
-
-                if (!siteTitle.trim() || !siteUrl.trim()) {
-                    setError("Title and URL are required.");
-                    return;
-                }
-
-                try {
-                    const docData = {
-                        title: siteTitle,
-                        url: siteUrl.startsWith('http') ? siteUrl : `https://${siteUrl}`,
-                        content: commentary,
-                        dateString: todayString,
-                        createdAt: serverTimestamp(),
-                        authorId: user.uid
-                    };
-
-                    await addDoc(collection(db, 'artifacts', appId, 'public', 'data', 'daily_sites'), docData);
-                    setSiteTitle('');
-                    setSiteUrl('');
-                    setCommentary('');
-                    setError('');
-                } catch (err) {
-                    console.error("Error posting:", err);
-                    setError("Could not etch this entry into the monument.");
-                }
-            };
-
-            const handleDelete = async (postId) => {
-                if (!user || !isEditor) return;
-                try {
-                    await deleteDoc(doc(db, 'artifacts', appId, 'public', 'data', 'daily_sites', postId));
-                } catch (err) {
-                    console.error("Error deleting:", err);
-                }
-            };
-
-            return (
-                <div className="min-h-screen bg-slate-50 text-slate-900 font-sans flex flex-col">
-                    <SeoHeader />
-
-                    {/* Header */}
-                    <header className="bg-white border-b border-slate-200 sticky top-0 z-20 shadow-sm">
-                        <div className="max-w-2xl mx-auto px-4 py-4 flex justify-between items-center">
-                            <div className="flex items-center space-x-3">
-                                <div className="bg-blue-600 p-2 rounded-lg">
-                                    <Globe className="w-6 h-6 text-white" />
-                                </div>
-                                <div>
-                                    <h1 className="text-xl font-bold tracking-tight text-slate-900">coolsiteoftheday.im</h1>
-                                    <p className="text-xs text-slate-500 font-medium uppercase tracking-wider">Digital Monument</p>
-                                </div>
-                            </div>
-                            
-                            <button 
-                                onClick={() => setIsEditor(!isEditor)}
-                                className={`p-2 rounded-full transition-colors ${isEditor ? 'bg-blue-100 text-blue-600' : 'bg-slate-100 text-slate-400'}`}
-                                title={isEditor ? "Disable Editor Mode" : "Enable Editor Mode"}
-                            >
-                                {isEditor ? <Unlock className="w-4 h-4" /> : <Lock className="w-4 h-4" />}
-                            </button>
-                        </div>
-                    </header>
-
-                    {/* Main */}
-                    <main className="flex-grow w-full max-w-2xl mx-auto px-4 flex flex-col justify-center py-12">
-                        
-                        {/* Editor Interface */}
-                        {isEditor && (
-                            <div className="mb-10 bg-white rounded-xl shadow-sm border border-slate-200 p-6 animate-fade-in">
-                                <h2 className="text-lg font-semibold mb-4 flex items-center">
-                                    <Send className="w-4 h-4 mr-2 text-blue-600" />
-                                    Etch Today's Entry ({todayString})
-                                </h2>
-                                
-                                {hasPostForToday ? (
-                                    <div className="bg-emerald-50 text-emerald-700 p-4 rounded-lg text-sm flex items-center border border-emerald-100">
-                                        <span className="mr-2">✓</span> Entry for today has already been recorded.
-                                    </div>
-                                ) : (
-                                    <form onSubmit={handlePost} className="space-y-4">
-                                        <div className="grid grid-cols-1 gap-4">
-                                            <input
-                                                type="text"
-                                                placeholder="Site Title (e.g., The Space Jam Website)"
-                                                className="w-full px-4 py-2 rounded-lg border border-slate-200 focus:border-blue-500 focus:ring-2 focus:ring-blue-200 outline-none transition-all"
-                                                value={siteTitle}
-                                                onChange={(e) => setSiteTitle(e.target.value)}
-                                            />
-                                            <input
-                                                type="url"
-                                                placeholder="https://..."
-                                                className="w-full px-4 py-2 rounded-lg border border-slate-200 focus:border-blue-500 focus:ring-2 focus:ring-blue-200 outline-none transition-all"
-                                                value={siteUrl}
-                                                onChange={(e) => setSiteUrl(e.target.value)}
-                                            />
-                                        </div>
-                                        <textarea
-                                            placeholder="Why is this site cool today?"
-                                            className="w-full px-4 py-2 rounded-lg border border-slate-200 focus:border-blue-500 focus:ring-2 focus:ring-blue-200 outline-none transition-all min-h-[80px]"
-                                            value={commentary}
-                                            onChange={(e) => setCommentary(e.target.value)}
-                                            maxLength={280}
-                                        />
-                                        <div className="flex justify-between items-center">
-                                            <span className="text-xs text-slate-400">{commentary.length}/280</span>
-                                            <button
-                                                type="submit"
-                                                disabled={!siteTitle || !siteUrl}
-                                                className="px-6 py-2 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
-                                            >
-                                                Publish Entry
-                                            </button>
-                                        </div>
-                                        {error && <p className="text-red-500 text-sm mt-2">{error}</p>}
-                                    </form>
-                                )}
-                            </div>
-                        )}
-
-                        {/* Feed Content */}
-                        {loading ? (
-                            <div className="space-y-4 animate-pulse">
-                                {[1,2,3].map(i => (
-                                    <div key={i} className="h-32 bg-slate-200 rounded-xl"></div>
-                                ))}
-                            </div>
-                        ) : (
-                            <div className="space-y-8">
-                                {/* Today's Section */}
-                                {todaysPost && (
-                                    <section>
-                                        <PostCard 
-                                            post={todaysPost} 
-                                            isToday={true} 
-                                            isEditor={isEditor} 
-                                            onDelete={handleDelete} 
-                                        />
-                                    </section>
-                                )}
-
-                                {/* Archive Section */}
-                                {(pastPosts.length > 0 || (!todaysPost && !loading)) && (
-                                    <section className="relative">
-                                        <div className="flex items-center mb-6">
-                                            <div className="h-px flex-1 bg-slate-200"></div>
-                                            <span className="px-4 text-xs font-bold text-slate-400 uppercase tracking-wider flex items-center">
-                                                <History className="w-3 h-3 mr-2" />
-                                                Previous Monuments
-                                            </span>
-                                            <div className="h-px flex-1 bg-slate-200"></div>
-                                        </div>
-
-                                        {pastPosts.length === 0 ? (
-                                            <div className="text-center py-8 text-slate-400 bg-white rounded-xl border border-slate-100 border-dashed">
-                                                <p className="text-sm">No previous history recorded.</p>
-                                            </div>
-                                        ) : (
-                                            <div className="space-y-6">
-                                                {pastPosts.map((post) => (
-                                                    <PostCard 
-                                                        key={post.id} 
-                                                        post={post} 
-                                                        isToday={false} 
-                                                        isEditor={isEditor} 
-                                                        onDelete={handleDelete} 
-                                                    />
-                                                ))}
-                                            </div>
-                                        )}
-                                    </section>
-                                )}
-                                
-                                {posts.length === 0 && (
-                                    <div className="text-center py-12 text-slate-400">
-                                        <Globe className="w-12 h-12 mx-auto mb-4 opacity-20" />
-                                        <p>No monuments erected yet.</p>
-                                        {isEditor && <p className="text-sm mt-2">Use the editor to create the first entry.</p>}
-                                    </div>
-                                )}
-                            </div>
-                        )}
-                        
-                        <footer className="mt-12 text-center text-slate-400 text-sm pb-8">
-                            <p>© {new Date().getFullYear()} coolsiteoftheday.im</p>
-                        </footer>
-                    </main>
-                </div>
-            );
+        // UI elements
+        const loadingState = document.getElementById('loading-state');
+        const mainContent = document.getElementById('main-content');
+        const screenshotContainer = document.getElementById('screenshot-container');
+        const siteTitleEl = document.getElementById('site-title');
+        const siteDateEl = document.getElementById('site-date');
+        const siteLinkEl = document.getElementById('site-link');
+        const curatorNoteEl = document.getElementById('curator-note');
+        const pageTitleEl = document.getElementById('page-title');
+        const currentYearEl = document.getElementById('current-year');
+        
+        // Set current year
+        if (currentYearEl) {
+            currentYearEl.textContent = new Date().getFullYear();
+        }
+        
+        // Function to get screenshot URL using Microlink API
+        function getScreenshotUrl(siteUrl) {
+            const baseUrl = 'https://api.microlink.io';
+            const params = new URLSearchParams({
+                url: siteUrl,
+                screenshot: 'true',
+                meta: 'false',
+                embed: 'screenshot.url',
+                waitFor: '2000',
+                viewport: '1920x1080'
+            });
+            return `${baseUrl}?${params.toString()}`;
         }
 
-        const root = createRoot(document.getElementById('root'));
-        root.render(<App />);
+        // Function to format the date string (YYYY-MM-DD to Month Day, Year)
+        function formatDate(dateString) {
+            try {
+                const date = new Date(dateString + 'T00:00:00'); // Ensure UTC neutrality
+                return date.toLocaleDateString('en-US', { 
+                    year: 'numeric', 
+                    month: 'long', 
+                    day: 'numeric' 
+                });
+            } catch (e) {
+                return dateString || '-- / --';
+            }
+        }
+
+        // Main Initialization and Listener
+        const initializeAppAndListen = async () => {
+            // FIX: Forces the use of the hardcoded projectId, bypassing environment conflicts
+            const currentAppId = firebaseConfig.projectId;
+
+            if (Object.keys(firebaseConfig).length === 0 || !currentAppId) {
+                console.error("Firebase configuration is missing.");
+                contentDisplay.innerHTML = `<div class="text-red-500">Firebase configuration error. Cannot load site data.</div>`;
+                return;
+            }
+
+            try {
+                // setLogLevel('Debug'); // Uncomment for debugging
+                const app = initializeApp(firebaseConfig);
+                const db = getFirestore(app);
+                const auth = getAuth(app);
+
+                // 1. Authenticate the user
+                if (initialAuthToken) {
+                    await signInWithCustomToken(auth, initialAuthToken);
+                } else {
+                    await signInAnonymously(auth);
+                }
+                const userId = auth.currentUser?.uid || crypto.randomUUID();
+                console.log(`Authenticated as user: ${userId}, Project ID: ${currentAppId}`);
+                
+                // 2. Define the target document reference
+                // This targets the public document written by your Firebase Function
+                const todayDocPath = `artifacts/${currentAppId}/public/data/daily_site/today`;
+                const todayDocRef = doc(db, todayDocPath);
+                
+                // Archive collection reference
+                const archiveCollectionPath = `artifacts/${currentAppId}/public/data/daily_sites_archive`;
+                const archiveCollectionRef = collection(db, archiveCollectionPath);
+                const archiveQuery = query(archiveCollectionRef, orderBy('timestamp', 'desc'), firestoreLimit(12));
+                
+                const archiveSection = document.getElementById('archive-section');
+                const archiveGrid = document.getElementById('archive-grid');
+                const archiveCount = document.getElementById('archive-count');
+
+                // 3. Set up the real-time listener
+                onSnapshot(todayDocRef, (docSnapshot) => {
+                    if (docSnapshot.exists()) {
+                        const data = docSnapshot.data();
+                        
+                        // Update UI elements
+                        const title = data.siteTitle || 'Featured Site';
+                        const url = data.siteUrl || 'about:blank';
+                        const note = data.curatorNote || 'A new discovery in digital design.';
+                        const date = data.date || 'Unknown Date';
+                        
+                        siteTitleEl.textContent = title;
+                        siteDateEl.textContent = formatDate(date);
+                        curatorNoteEl.textContent = note;
+                        siteLinkEl.href = url;
+                        pageTitleEl.textContent = `Cool Site of the Day: ${title}`;
+
+                        // Create screenshot image
+                        screenshotContainer.innerHTML = `
+                            <img 
+                                src="${getScreenshotUrl(url)}"
+                                alt="Screenshot of ${title}"
+                                class="w-full h-full object-cover object-top"
+                                loading="eager"
+                                onerror="this.onerror=null; this.src='data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 width=%27100%27 height=%27100%27%3E%3Crect fill=%27%23111827%27 width=%27100%27 height=%27100%27/%3E%3Ctext fill=%27%23475569%27 font-family=%27monospace%27 font-size=%2714%27 x=%2750%%27 y=%2750%%27 text-anchor=%27middle%27 dominant-baseline=%27middle%27%3EScreenshot unavailable%3C/text%3E%3C/svg%3E';"
+                            />
+                        `;
+                        
+                        // Show main content, hide loading
+                        loadingState.classList.add('hidden');
+                        mainContent.classList.remove('hidden');
+
+                    } else {
+                        // Handle case where the 'today' document doesn't exist yet
+                        siteTitleEl.textContent = 'Awaiting First Site';
+                        siteDateEl.textContent = 'Preparing Monument';
+                        curatorNoteEl.textContent = 'The system is ready, waiting for the automated daily update to seed the content.';
+                        siteLinkEl.href = '#';
+
+                        screenshotContainer.innerHTML = `
+                            <div class="w-full h-full flex flex-col items-center justify-center text-slate-500 p-8">
+                                <svg class="w-16 h-16 mb-4 opacity-50" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                </svg>
+                                <p class="text-xl font-semibold mb-2">Monument Standby</p>
+                                <p class="text-sm text-center">The database is configured. Awaiting the automated daily update to feature the first site.</p>
+                            </div>
+                        `;
+                        
+                        loadingState.classList.add('hidden');
+                        mainContent.classList.remove('hidden');
+                    }
+                }, (error) => {
+                    console.error("Error listening to Firestore:", error);
+                    screenshotContainer.innerHTML = `
+                        <div class="w-full h-full flex items-center justify-center text-red-400 p-8">
+                            <p>Connection Error (Permissions or Rules). Please check console.</p>
+                        </div>
+                    `;
+                    loadingState.classList.add('hidden');
+                    mainContent.classList.remove('hidden');
+                });
+                
+                // 4. Set up archive listener
+                onSnapshot(archiveQuery, (snapshot) => {
+                    if (!snapshot.empty) {
+                        const archiveDocs = snapshot.docs.map(doc => ({
+                            id: doc.id,
+                            ...doc.data()
+                        }));
+                        
+                        archiveCount.textContent = `(${archiveDocs.length})`;
+                        
+                        archiveGrid.innerHTML = archiveDocs.map(item => `
+                            <a href="${item.siteUrl || '#'}" target="_blank" rel="noopener noreferrer" 
+                               class="group glass-morphism rounded-xl overflow-hidden border border-slate-700/50 hover:border-purple-500/50 transition-all duration-300 hover:scale-105">
+                                <div class="relative h-48 overflow-hidden bg-slate-900">
+                                    <img 
+                                        src="${getScreenshotUrl(item.siteUrl)}"
+                                        alt="Screenshot of ${item.siteTitle || 'Site'}"
+                                        class="w-full h-full object-cover object-top transition-transform duration-300 group-hover:scale-110"
+                                        loading="lazy"
+                                        onerror="this.onerror=null; this.src='data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 width=%27100%27 height=%27100%27%3E%3Crect fill=%27%23111827%27 width=%27100%27 height=%27100%27/%3E%3Ctext fill=%27%23475569%27 font-family=%27monospace%27 font-size=%2712%27 x=%2750%%27 y=%2750%%27 text-anchor=%27middle%27 dominant-baseline=%27middle%27%3EScreenshot%3C/text%3E%3C/svg%3E';"
+                                    />
+                                </div>
+                                <div class="p-4">
+                                    <div class="flex items-center justify-between mb-2">
+                                        <span class="text-purple-400 font-mono text-xs">${formatDate(item.dateString || item.date)}</span>
+                                        <svg class="w-4 h-4 text-slate-500 group-hover:text-purple-400 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path>
+                                        </svg>
+                                    </div>
+                                    <h3 class="text-white font-semibold mb-2 group-hover:text-purple-300 transition-colors line-clamp-2">
+                                        ${item.siteTitle || 'Untitled Site'}
+                                    </h3>
+                                    ${item.curatorNote ? `<p class="text-slate-400 text-sm line-clamp-2">${item.curatorNote}</p>` : ''}
+                                </div>
+                            </a>
+                        `).join('');
+                        
+                        archiveSection.classList.remove('hidden');
+                    }
+                }, (error) => {
+                    console.error("Error loading archive:", error);
+                });
+
+            } catch (error) {
+                console.error("Authentication or Firebase setup failed:", error);
+                contentDisplay.innerHTML = `<div class="text-red-500">Initialization failed. See console for details.</div>`;
+            }
+        }
+
+        // Start the application
+        window.onload = initializeAppAndListen;
     </script>
 </body>
 </html>

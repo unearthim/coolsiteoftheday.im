@@ -1,0 +1,477 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cool Site of the Day Award Badges</title>
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        'sans': ['Inter', 'sans-serif'],
+                        'mono': ['Space Mono', 'monospace'],
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #0a0e27;
+            background-attachment: fixed;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+        
+        /* Ambient background animation */
+        .ambient-light {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            pointer-events: none;
+            z-index: -1;
+            background-image: 
+                radial-gradient(at 20% 30%, rgba(88, 28, 135, 0.2) 0px, transparent 50%),
+                radial-gradient(at 80% 70%, rgba(37, 99, 235, 0.2) 0px, transparent 50%),
+                radial-gradient(at 50% 50%, rgba(109, 40, 217, 0.15) 0px, transparent 50%);
+            animation: ambient-drift 10s ease-in-out infinite alternate;
+        }
+
+        @keyframes ambient-drift {
+            0% { transform: scale(1); }
+            100% { transform: scale(1.1); }
+        }
+        
+        .glass-morphism {
+            background: rgba(15, 23, 42, 0.6);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+        }
+        
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-8px); }
+            100% { transform: translateY(0px); }
+        }
+
+        .float-animation {
+            animation: float 6s ease-in-out infinite;
+        }
+        
+        .text-glow {
+            text-shadow: 0 0 40px rgba(139, 92, 246, 0.5);
+        }
+        
+        /* BADGE STYLES */
+        .badge-container {
+            background: rgba(15, 23, 42, 0.6);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            padding: 40px;
+            border-radius: 16px;
+            border: 1px solid rgba(139, 92, 246, 0.2);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+        }
+        
+        .badge-title {
+            text-align: center;
+            margin-bottom: 24px;
+            color: rgba(255, 255, 255, 0.9);
+            font-weight: 600;
+            font-size: 1.25rem;
+        }
+        .award-badge {
+            display: inline-block;
+            text-decoration: none;
+            transition: transform 0.2s ease;
+        }
+        
+        .award-badge:hover {
+            transform: scale(1.05);
+        }
+        
+        /* Large Badge (200x200) */
+        .badge-large {
+            width: 200px;
+            height: 200px;
+            background: linear-gradient(135deg, #7c3aed 0%, #2563eb 100%);
+            border-radius: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            box-shadow: 0 10px 40px rgba(124, 58, 237, 0.4);
+        }
+        
+        .badge-large::before {
+            content: '';
+            position: absolute;
+            inset: -4px;
+            background: linear-gradient(135deg, #7c3aed 0%, #2563eb 100%);
+            border-radius: 24px;
+            filter: blur(20px);
+            opacity: 0.5;
+            z-index: -1;
+        }
+        
+        .badge-icon {
+            width: 60px;
+            height: 60px;
+            margin-bottom: 12px;
+        }
+        
+        .badge-text {
+            color: white;
+            text-align: center;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            line-height: 1.2;
+        }
+        
+        .badge-large .badge-text {
+            font-size: 18px;
+            padding: 0 10px;
+        }
+        
+        .badge-date {
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 12px;
+            font-weight: 600;
+            margin-top: 8px;
+            font-family: 'Courier New', monospace;
+        }
+        
+        /* Medium Badge (150x150) */
+        .badge-medium {
+            width: 150px;
+            height: 150px;
+            background: linear-gradient(135deg, #7c3aed 0%, #2563eb 100%);
+            border-radius: 16px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            box-shadow: 0 8px 30px rgba(124, 58, 237, 0.4);
+        }
+        
+        .badge-medium .badge-icon {
+            width: 45px;
+            height: 45px;
+            margin-bottom: 8px;
+        }
+        
+        .badge-medium .badge-text {
+            font-size: 14px;
+            padding: 0 8px;
+        }
+        
+        .badge-medium .badge-date {
+            font-size: 10px;
+            margin-top: 6px;
+        }
+        
+        /* Small Badge (88x31 - classic web badge size) */
+        .badge-small {
+            width: 88px;
+            height: 31px;
+            background: linear-gradient(135deg, #7c3aed 0%, #2563eb 100%);
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 4px;
+            box-shadow: 0 4px 15px rgba(124, 58, 237, 0.4);
+            border: 2px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .badge-small .badge-icon {
+            width: 16px;
+            height: 16px;
+            margin: 0;
+        }
+        
+        .badge-small .badge-text {
+            font-size: 8px;
+            font-weight: 900;
+            letter-spacing: 0.3px;
+        }
+        
+        /* Code Display */
+        .code-display {
+            background: rgba(10, 14, 39, 0.8);
+            color: #d4d4d4;
+            padding: 24px;
+            border-radius: 12px;
+            font-family: 'Space Mono', monospace;
+            font-size: 12px;
+            max-width: 600px;
+            overflow-x: auto;
+            margin-top: 16px;
+            margin-left: auto;
+            margin-right: auto;
+            border: 1px solid rgba(139, 92, 246, 0.2);
+        }
+        
+        .code-display code {
+            color: #9cdcfe;
+        }
+        
+        .code-display .string {
+            color: #ce9178;
+        }
+        
+        .badges-row {
+            display: flex;
+            gap: 30px;
+            align-items: center;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        
+        .copy-btn {
+            background: linear-gradient(135deg, #7c3aed 0%, #2563eb 100%);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 13px;
+            font-weight: 600;
+            margin-top: 12px;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            box-shadow: 0 4px 15px rgba(124, 58, 237, 0.3);
+        }
+        
+        .copy-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(124, 58, 237, 0.5);
+        }
+        
+        .sparkles-icon {
+            stroke: currentColor;
+            fill: none;
+            stroke-width: 2;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+        }
+    </style>
+</head>
+<body>
+    <!-- Ambient background -->
+    <div class="ambient-light"></div>
+    
+    <!-- Main content -->
+    <div class="min-h-screen py-16 px-4">
+        <!-- Header -->
+        <header class="text-center mb-16">
+            <div class="float-animation inline-block mb-6">
+                <svg width="60" height="60" viewBox="0 0 24 24" fill="none" stroke="currentColor" class="text-purple-400">
+                    <path d="M12 3l1.912 5.813a2 2 0 001.275 1.275L21 12l-5.813 1.912a2 2 0 00-1.275 1.275L12 21l-1.912-5.813a2 2 0 00-1.275-1.275L3 12l5.813-1.912a2 2 0 001.275-1.275L12 3z" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+            </div>
+            <h1 class="text-5xl font-bold text-white mb-4 text-glow">Award Badges</h1>
+            <p class="text-gray-300 max-w-2xl mx-auto text-lg">
+                Classic web badge designs for recipients to display on their sites. 
+                Copy the SVG code and paste it directly into your HTML!
+            </p>
+        </header>
+        
+        <!-- Badges Grid -->
+        <div class="max-w-6xl mx-auto space-y-12">
+        
+    <!-- Large Badge -->
+    <div class="badge-container">
+        <h2 class="badge-title">Large Badge (200×200)</h2>
+        <div class="badges-row">
+            <a href="https://coolsiteoftheday.im" class="award-badge badge-large" target="_blank" rel="noopener noreferrer">
+                <svg class="badge-icon sparkles-icon" viewBox="0 0 24 24">
+                    <path d="M12 3l1.912 5.813a2 2 0 001.275 1.275L21 12l-5.813 1.912a2 2 0 00-1.275 1.275L12 21l-1.912-5.813a2 2 0 00-1.275-1.275L3 12l5.813-1.912a2 2 0 001.275-1.275L12 3z" stroke="white" fill="none" stroke-width="2"/>
+                </svg>
+                <div class="badge-text">
+                    Cool Site<br>of the Day
+                </div>
+                <div class="badge-date">Nov 26, 2025</div>
+            </a>
+        </div>
+        <div class="code-display">
+&lt;a href=<span class="string">"https://coolsiteoftheday.im"</span> target=<span class="string">"_blank"</span>&gt;<br>
+&lt;svg xmlns=<span class="string">"http://www.w3.org/2000/svg"</span> width=<span class="string">"200"</span> height=<span class="string">"200"</span> viewBox=<span class="string">"0 0 200 200"</span>&gt;<br>
+&nbsp;&nbsp;&lt;defs&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;linearGradient id=<span class="string">"grad"</span> x1=<span class="string">"0%"</span> y1=<span class="string">"0%"</span> x2=<span class="string">"100%"</span> y2=<span class="string">"100%"</span>&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;stop offset=<span class="string">"0%"</span> style=<span class="string">"stop-color:#7c3aed;stop-opacity:1"</span> /&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;stop offset=<span class="string">"100%"</span> style=<span class="string">"stop-color:#2563eb;stop-opacity:1"</span> /&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;/linearGradient&gt;<br>
+&nbsp;&nbsp;&lt;/defs&gt;<br>
+&nbsp;&nbsp;&lt;rect width=<span class="string">"200"</span> height=<span class="string">"200"</span> rx=<span class="string">"20"</span> fill=<span class="string">"url(#grad)"</span>/&gt;<br>
+&nbsp;&nbsp;&lt;g transform=<span class="string">"translate(100, 60)"</span>&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;path d=<span class="string">"M0,-24 L4.776,-8.187 C5.097,-7.176 5.823,-6.451 6.834,-6.13 L22.647,-1.353 L6.834,3.424 C5.823,3.745 5.097,4.471 4.776,5.482 L0,21.295 L-4.776,5.482 C-5.097,4.471 -5.823,3.745 -6.834,3.424 L-22.647,-1.353 L-6.834,-6.13 C-5.823,-6.451 -5.097,-7.176 -4.776,-8.187 Z"</span> fill=<span class="string">"none"</span> stroke=<span class="string">"white"</span> stroke-width=<span class="string">"2"</span>/&gt;<br>
+&nbsp;&nbsp;&lt;/g&gt;<br>
+&nbsp;&nbsp;&lt;text x=<span class="string">"100"</span> y=<span class="string">"115"</span> font-family=<span class="string">"Arial, sans-serif"</span> font-size=<span class="string">"18"</span> font-weight=<span class="string">"800"</span> fill=<span class="string">"white"</span> text-anchor=<span class="string">"middle"</span>&gt;COOL SITE&lt;/text&gt;<br>
+&nbsp;&nbsp;&lt;text x=<span class="string">"100"</span> y=<span class="string">"135"</span> font-family=<span class="string">"Arial, sans-serif"</span> font-size=<span class="string">"18"</span> font-weight=<span class="string">"800"</span> fill=<span class="string">"white"</span> text-anchor=<span class="string">"middle"</span>&gt;OF THE DAY&lt;/text&gt;<br>
+&nbsp;&nbsp;&lt;text x=<span class="string">"100"</span> y=<span class="string">"158"</span> font-family=<span class="string">"Courier New, monospace"</span> font-size=<span class="string">"12"</span> font-weight=<span class="string">"600"</span> fill=<span class="string">"rgba(255,255,255,0.8)"</span> text-anchor=<span class="string">"middle"</span>&gt;Nov 26, 2025&lt;/text&gt;<br>
+&lt;/svg&gt;<br>
+&lt;/a&gt;
+        </div>
+        <button class="copy-btn" onclick="copyCode(0)">Copy Code</button>
+    </div>
+    
+    <!-- Medium Badge -->
+    <div class="badge-container">
+        <h2 class="badge-title">Medium Badge (150×150)</h2>
+        <div class="badges-row">
+            <a href="https://coolsiteoftheday.im" class="award-badge badge-medium" target="_blank" rel="noopener noreferrer">
+                <svg class="badge-icon sparkles-icon" viewBox="0 0 24 24">
+                    <path d="M12 3l1.912 5.813a2 2 0 001.275 1.275L21 12l-5.813 1.912a2 2 0 00-1.275 1.275L12 21l-1.912-5.813a2 2 0 00-1.275-1.275L3 12l5.813-1.912a2 2 0 001.275-1.275L12 3z" stroke="white" fill="none" stroke-width="2"/>
+                </svg>
+                <div class="badge-text">
+                    Cool Site<br>of the Day
+                </div>
+                <div class="badge-date">Nov 26, 2025</div>
+            </a>
+        </div>
+        <div class="code-display">
+&lt;a href=<span class="string">"https://coolsiteoftheday.im"</span> target=<span class="string">"_blank"</span>&gt;<br>
+&lt;svg xmlns=<span class="string">"http://www.w3.org/2000/svg"</span> width=<span class="string">"150"</span> height=<span class="string">"150"</span> viewBox=<span class="string">"0 0 150 150"</span>&gt;<br>
+&nbsp;&nbsp;&lt;defs&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;linearGradient id=<span class="string">"grad"</span> x1=<span class="string">"0%"</span> y1=<span class="string">"0%"</span> x2=<span class="string">"100%"</span> y2=<span class="string">"100%"</span>&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;stop offset=<span class="string">"0%"</span> style=<span class="string">"stop-color:#7c3aed;stop-opacity:1"</span> /&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;stop offset=<span class="string">"100%"</span> style=<span class="string">"stop-color:#2563eb;stop-opacity:1"</span> /&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;/linearGradient&gt;<br>
+&nbsp;&nbsp;&lt;/defs&gt;<br>
+&nbsp;&nbsp;&lt;rect width=<span class="string">"150"</span> height=<span class="string">"150"</span> rx=<span class="string">"16"</span> fill=<span class="string">"url(#grad)"</span>/&gt;<br>
+&nbsp;&nbsp;&lt;g transform=<span class="string">"translate(75, 45)"</span>&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;path d=<span class="string">"M0,-18 L3.582,-6.14 C3.823,-5.382 4.368,-4.838 5.126,-4.597 L16.985,-1.015 L5.126,2.568 C4.368,2.809 3.823,3.353 3.582,4.111 L0,15.971 L-3.582,4.111 C-3.823,3.353 -4.368,2.809 -5.126,2.568 L-16.985,-1.015 L-5.126,-4.597 C-4.368,-4.838 -3.823,-5.382 -3.582,-6.14 Z"</span> fill=<span class="string">"none"</span> stroke=<span class="string">"white"</span> stroke-width=<span class="string">"2"</span>/&gt;<br>
+&nbsp;&nbsp;&lt;/g&gt;<br>
+&nbsp;&nbsp;&lt;text x=<span class="string">"75"</span> y=<span class="string">"85"</span> font-family=<span class="string">"Arial, sans-serif"</span> font-size=<span class="string">"14"</span> font-weight=<span class="string">"800"</span> fill=<span class="string">"white"</span> text-anchor=<span class="string">"middle"</span>&gt;COOL SITE&lt;/text&gt;<br>
+&nbsp;&nbsp;&lt;text x=<span class="string">"75"</span> y=<span class="string">"101"</span> font-family=<span class="string">"Arial, sans-serif"</span> font-size=<span class="string">"14"</span> font-weight=<span class="string">"800"</span> fill=<span class="string">"white"</span> text-anchor=<span class="string">"middle"</span>&gt;OF THE DAY&lt;/text&gt;<br>
+&nbsp;&nbsp;&lt;text x=<span class="string">"75"</span> y=<span class="string">"118"</span> font-family=<span class="string">"Courier New, monospace"</span> font-size=<span class="string">"10"</span> font-weight=<span class="string">"600"</span> fill=<span class="string">"rgba(255,255,255,0.8)"</span> text-anchor=<span class="string">"middle"</span>&gt;Nov 26, 2025&lt;/text&gt;<br>
+&lt;/svg&gt;<br>
+&lt;/a&gt;
+        </div>
+        <button class="copy-btn" onclick="copyCode(1)">Copy Code</button>
+    </div>
+    
+    <!-- Small Badge (Classic 88x31) -->
+    <div class="badge-container">
+        <h2 class="badge-title">Small Badge (88×31 - Classic Web Badge)</h2>
+        <div class="badges-row">
+            <a href="https://coolsiteoftheday.im" class="award-badge badge-small" target="_blank" rel="noopener noreferrer">
+                <svg class="badge-icon sparkles-icon" viewBox="0 0 24 24">
+                    <path d="M12 3l1.912 5.813a2 2 0 001.275 1.275L21 12l-5.813 1.912a2 2 0 00-1.275 1.275L12 21l-1.912-5.813a2 2 0 00-1.275-1.275L3 12l5.813-1.912a2 2 0 001.275-1.275L12 3z" stroke="white" fill="none" stroke-width="2"/>
+                </svg>
+                <div class="badge-text">COOL<br>SITE</div>
+            </a>
+        </div>
+        <div class="code-display">
+&lt;a href=<span class="string">"https://coolsiteoftheday.im"</span> target=<span class="string">"_blank"</span>&gt;<br>
+&lt;svg xmlns=<span class="string">"http://www.w3.org/2000/svg"</span> width=<span class="string">"88"</span> height=<span class="string">"31"</span> viewBox=<span class="string">"0 0 88 31"</span>&gt;<br>
+&nbsp;&nbsp;&lt;defs&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;linearGradient id=<span class="string">"grad"</span> x1=<span class="string">"0%"</span> y1=<span class="string">"0%"</span> x2=<span class="string">"100%"</span> y2=<span class="string">"100%"</span>&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;stop offset=<span class="string">"0%"</span> style=<span class="string">"stop-color:#7c3aed;stop-opacity:1"</span> /&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;stop offset=<span class="string">"100%"</span> style=<span class="string">"stop-color:#2563eb;stop-opacity:1"</span> /&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;/linearGradient&gt;<br>
+&nbsp;&nbsp;&lt;/defs&gt;<br>
+&nbsp;&nbsp;&lt;rect width=<span class="string">"88"</span> height=<span class="string">"31"</span> rx=<span class="string">"4"</span> fill=<span class="string">"url(#grad)"</span>/&gt;<br>
+&nbsp;&nbsp;&lt;rect x=<span class="string">"1"</span> y=<span class="string">"1"</span> width=<span class="string">"86"</span> height=<span class="string">"29"</span> rx=<span class="string">"3"</span> fill=<span class="string">"none"</span> stroke=<span class="string">"rgba(255,255,255,0.2)"</span> stroke-width=<span class="string">"2"</span>/&gt;<br>
+&nbsp;&nbsp;&lt;g transform=<span class="string">"translate(20, 15.5)"</span>&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;path d=<span class="string">"M0,-6 L1.194,-2.047 C1.274,-1.794 1.456,-1.612 1.709,-1.532 L5.662,-0.338 L1.709,0.856 C1.456,0.936 1.274,1.118 1.194,1.371 L0,5.324 L-1.194,1.371 C-1.274,1.118 -1.456,0.936 -1.709,0.856 L-5.662,-0.338 L-1.709,-1.532 C-1.456,-1.612 -1.274,-1.794 -1.194,-2.047 Z"</span> fill=<span class="string">"none"</span> stroke=<span class="string">"white"</span> stroke-width=<span class="string">"1.5"</span>/&gt;<br>
+&nbsp;&nbsp;&lt;/g&gt;<br>
+&nbsp;&nbsp;&lt;text x=<span class="string">"38"</span> y=<span class="string">"13"</span> font-family=<span class="string">"Arial, sans-serif"</span> font-size=<span class="string">"8"</span> font-weight=<span class="string">"900"</span> fill=<span class="string">"white"</span>&gt;COOL&lt;/text&gt;<br>
+&nbsp;&nbsp;&lt;text x=<span class="string">"38"</span> y=<span class="string">"23"</span> font-family=<span class="string">"Arial, sans-serif"</span> font-size=<span class="string">"8"</span> font-weight=<span class="string">"900"</span> fill=<span class="string">"white"</span>&gt;SITE&lt;/text&gt;<br>
+&lt;/svg&gt;<br>
+&lt;/a&gt;
+        </div>
+        <button class="copy-btn" onclick="copyCode(2)">Copy Code</button>
+    </div>
+        </div>
+        
+        <!-- Footer Note -->
+        <div class="text-center mt-16 max-w-2xl mx-auto">
+            <div class="glass-morphism rounded-xl p-8 border border-purple-500/20">
+                <p class="text-gray-300 leading-relaxed">
+                    <strong class="text-white">Note:</strong> The SVG code is fully self-contained - just copy and paste into your HTML! 
+                    No external files needed. Edit the date in the last &lt;text&gt; element to match your award date.
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const codes = [
+            `<a href="https://coolsiteoftheday.im" target="_blank">
+<svg xmlns="http://www.w3.org/2000/svg" width="200" height="200" viewBox="0 0 200 200">
+  <defs>
+    <linearGradient id="grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#7c3aed;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#2563eb;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  <rect width="200" height="200" rx="20" fill="url(#grad)"/>
+  <g transform="translate(100, 60)">
+    <path d="M0,-24 L4.776,-8.187 C5.097,-7.176 5.823,-6.451 6.834,-6.13 L22.647,-1.353 L6.834,3.424 C5.823,3.745 5.097,4.471 4.776,5.482 L0,21.295 L-4.776,5.482 C-5.097,4.471 -5.823,3.745 -6.834,3.424 L-22.647,-1.353 L-6.834,-6.13 C-5.823,-6.451 -5.097,-7.176 -4.776,-8.187 Z" fill="none" stroke="white" stroke-width="2"/>
+  </g>
+  <text x="100" y="115" font-family="Arial, sans-serif" font-size="18" font-weight="800" fill="white" text-anchor="middle">COOL SITE</text>
+  <text x="100" y="135" font-family="Arial, sans-serif" font-size="18" font-weight="800" fill="white" text-anchor="middle">OF THE DAY</text>
+  <text x="100" y="158" font-family="Courier New, monospace" font-size="12" font-weight="600" fill="rgba(255,255,255,0.8)" text-anchor="middle">Nov 26, 2025</text>
+</svg>
+</a>`,
+            `<a href="https://coolsiteoftheday.im" target="_blank">
+<svg xmlns="http://www.w3.org/2000/svg" width="150" height="150" viewBox="0 0 150 150">
+  <defs>
+    <linearGradient id="grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#7c3aed;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#2563eb;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  <rect width="150" height="150" rx="16" fill="url(#grad)"/>
+  <g transform="translate(75, 45)">
+    <path d="M0,-18 L3.582,-6.14 C3.823,-5.382 4.368,-4.838 5.126,-4.597 L16.985,-1.015 L5.126,2.568 C4.368,2.809 3.823,3.353 3.582,4.111 L0,15.971 L-3.582,4.111 C-3.823,3.353 -4.368,2.809 -5.126,2.568 L-16.985,-1.015 L-5.126,-4.597 C-4.368,-4.838 -3.823,-5.382 -3.582,-6.14 Z" fill="none" stroke="white" stroke-width="2"/>
+  </g>
+  <text x="75" y="85" font-family="Arial, sans-serif" font-size="14" font-weight="800" fill="white" text-anchor="middle">COOL SITE</text>
+  <text x="75" y="101" font-family="Arial, sans-serif" font-size="14" font-weight="800" fill="white" text-anchor="middle">OF THE DAY</text>
+  <text x="75" y="118" font-family="Courier New, monospace" font-size="10" font-weight="600" fill="rgba(255,255,255,0.8)" text-anchor="middle">Nov 26, 2025</text>
+</svg>
+</a>`,
+            `<a href="https://coolsiteoftheday.im" target="_blank">
+<svg xmlns="http://www.w3.org/2000/svg" width="88" height="31" viewBox="0 0 88 31">
+  <defs>
+    <linearGradient id="grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#7c3aed;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#2563eb;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  <rect width="88" height="31" rx="4" fill="url(#grad)"/>
+  <rect x="1" y="1" width="86" height="29" rx="3" fill="none" stroke="rgba(255,255,255,0.2)" stroke-width="2"/>
+  <g transform="translate(20, 15.5)">
+    <path d="M0,-6 L1.194,-2.047 C1.274,-1.794 1.456,-1.612 1.709,-1.532 L5.662,-0.338 L1.709,0.856 C1.456,0.936 1.274,1.118 1.194,1.371 L0,5.324 L-1.194,1.371 C-1.274,1.118 -1.456,0.936 -1.709,0.856 L-5.662,-0.338 L-1.709,-1.532 C-1.456,-1.612 -1.274,-1.794 -1.194,-2.047 Z" fill="none" stroke="white" stroke-width="1.5"/>
+  </g>
+  <text x="38" y="13" font-family="Arial, sans-serif" font-size="8" font-weight="900" fill="white">COOL</text>
+  <text x="38" y="23" font-family="Arial, sans-serif" font-size="8" font-weight="900" fill="white">SITE</text>
+</svg>
+</a>`
+        ];
+        
+        function copyCode(index) {
+            navigator.clipboard.writeText(codes[index]).then(() => {
+                alert('Code copied to clipboard!');
+            });
+        }
+    </script>
+</body>
+</html>

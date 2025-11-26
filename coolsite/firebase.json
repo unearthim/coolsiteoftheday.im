@@ -1,0 +1,14 @@
+{
+  "functions": {
+    "source": "functions",
+    "runtime": "nodejs20",
+    "gen": 2,
+    "ignore": [
+      "node_modules",
+      ".git",
+      "firebase-debug.log",
+      "firebase-debug.*.log"
+    ],
+    "skipBackup": true
+  }
+}

@@ -1,0 +1,4 @@
+AuthType Basic
+AuthName "Cool Site of the Day - Admin Area"
+AuthUserFile /home/yourusername/public_html/coolsiteoftheday.im/admin/.htpasswd
+Require valid-user

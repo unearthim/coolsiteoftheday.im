@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cool Site Curation Console | Admin</title>
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        'sans': ['Inter', 'sans-serif'],
+                        'mono': ['Space Mono', 'monospace'],
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #0a0e27;
+            background-attachment: fixed;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+        
+        /* Ambient background animation */
+        .ambient-light {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            pointer-events: none;
+            z-index: -1;
+            background-image: 
+                radial-gradient(at 20% 30%, rgba(88, 28, 135, 0.2) 0px, transparent 50%),
+                radial-gradient(at 80% 70%, rgba(37, 99, 235, 0.2) 0px, transparent 50%),
+                radial-gradient(at 50% 50%, rgba(109, 40, 217, 0.15) 0px, transparent 50%);
+            animation: ambient-drift 10s ease-in-out infinite alternate;
+        }
+
+        @keyframes ambient-drift {
+            0% { transform: scale(1); }
+            100% { transform: scale(1.1); }
+        }
+        
+        .glass-morphism {
+            background: rgba(15, 23, 42, 0.6);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+        }
+        
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-8px); }
+            100% { transform: translateY(0px); }
+        }
+
+        .float-animation {
+            animation: float 6s ease-in-out infinite;
+        }
+        
+        .text-glow {
+            text-shadow: 0 0 40px rgba(139, 92, 246, 0.5);
+        }
+        
+        input, textarea {
+            background: rgba(15, 23, 42, 0.6);
+            color: #f3f4f6 !important;
+            border: 1px solid rgba(139, 92, 246, 0.2);
+            padding: 12px;
+            border-radius: 8px;
+            transition: all 0.2s;
+            backdrop-filter: blur(10px);
+            -webkit-text-fill-color: #f3f4f6;
+        }
+        
+        input::placeholder, textarea::placeholder {
+            color: rgba(148, 163, 184, 0.5);
+        }
+        
+        input:focus, textarea:focus {
+            outline: none;
+            border-color: rgba(139, 92, 246, 0.6);
+            box-shadow: 0 0 0 1px rgba(139, 92, 246, 0.6), 0 0 20px rgba(139, 92, 246, 0.2);
+        }
+    </style>
+</head>
+<body>
+    <!-- Ambient background -->
+    <div class="ambient-light"></div>
+    
+    <div class="min-h-screen p-4 sm:p-8 flex justify-center items-start pt-16">
+
+    <div class="w-full max-w-3xl glass-morphism p-8 sm:p-12 rounded-2xl shadow-2xl border border-purple-500/20">
+        <header class="mb-10 pb-6 border-b border-slate-700/50">
+            <div class="flex items-center space-x-4 mb-4 float-animation">
+                <div class="relative">
+                    <div class="absolute inset-0 bg-gradient-to-r from-purple-600 to-blue-600 rounded-2xl blur-xl opacity-50"></div>
+                    <div class="relative bg-gradient-to-br from-purple-600 to-blue-600 p-3 rounded-2xl">
+                        <svg class="w-7 h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3l1.912 5.813a2 2 0 001.275 1.275L21 12l-5.813 1.912a2 2 0 00-1.275 1.275L12 21l-1.912-5.813a2 2 0 00-1.275-1.275L3 12l5.813-1.912a2 2 0 001.275-1.275L12 3z"></path>
+                        </svg>
+                    </div>
+                </div>
+                <h1 class="text-4xl font-black tracking-tight uppercase text-transparent bg-clip-text bg-gradient-to-r from-purple-300 to-blue-300 text-glow">
+                    Curation Console
+                </h1>
+            </div>
+            <p class="text-slate-400 text-lg">Add new entries to the site queue.</p>
+        </header>
+
+        <form id="site-form" class="space-y-6">
+            
+            <!-- Dynamic Queue Index -->
+            <div class="glass-morphism p-6 rounded-xl flex items-center justify-between border border-purple-500/20">
+                <label class="block text-base font-semibold text-slate-300">Next Queue Index</label>
+                <span id="next-index" class="text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-blue-400">...</span>
+                <input type="hidden" id="queue-index-input" name="queueIndex">
+            </div>
+
+            <!-- Site Title -->
+            <div>
+                <label for="title" class="block text-sm font-semibold text-slate-300 mb-3">Site Title</label>
+                <input type="text" id="title" name="title" required 
+                       class="w-full font-mono" placeholder="e.g., Generative Fluid Typography">
+            </div>
+
+            <!-- Site URL -->
+            <div>
+                <label for="url" class="block text-sm font-semibold text-slate-300 mb-3">Site URL</label>
+                <input type="url" id="url" name="url" required 
+                       class="w-full font-mono" placeholder="https://www.example.com">
+            </div>
+
+            <!-- Curator Note -->
+            <div>
+                <label for="note" class="block text-sm font-semibold text-slate-300 mb-3">Curator Note</label>
+                <textarea id="note" name="note" rows="4" required 
+                          class="w-full" placeholder="What makes this site cool? Share your curatorial perspective..."></textarea>
+            </div>
+
+            <!-- Submit Button -->
+            <button type="submit" id="submit-button" 
+                    class="w-full py-4 bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 text-white font-bold text-lg rounded-xl shadow-lg transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed transform hover:scale-[1.02]">
+                Add Site to Queue
+            </button>
+        </form>
+
+        <!-- Status Message Area -->
+        <div id="status-message" class="mt-8 p-5 rounded-xl hidden font-semibold"></div>
+    </div>
+
+    <!-- Firebase Imports and Logic -->
+    <script type="module">
+        // Using stable v11 imports for the admin console
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+        import { getAuth, signInAnonymously, signInWithCustomToken } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+        import { getFirestore, collection, addDoc, getDocs, setLogLevel } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+
+        // Environment variables
+        const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
+        
+        // --- START DEBUG FALLBACK ---
+        // Hardcoded Firebase configuration to bypass environment injection errors
+        const firebaseConfigRaw = typeof __firebase_config !== 'undefined' ? __firebase_config : '{}';
+        
+        // Jojo's jojo-4b593 project configuration inserted here:
+        const firebaseConfig = firebaseConfigRaw === '{}' ? {
+            apiKey: "AIzaSyAEU3QcCzu4ZmwJpHhogu1hMpyRp2swUz8",
+            authDomain: "jojo-4b593.firebaseapp.com",
+            projectId: "jojo-4b593",
+            storageBucket: "jojo-4b593.firebasestorage.app",
+            messagingSenderId: "353107431611",
+            appId: "1:353107431611:web:8ac816593d8fe0eb44599e",
+            measurementId: "G-CYGZ7C37JK"
+        } : JSON.parse(firebaseConfigRaw);
+
+        // FIX: Corrected capitalization in the assignment
+        const initialAuthToken = typeof __initial_auth_token !== 'undefined' ? __initial_auth_token : null;
+        // --- END DEBUG FALLBACK ---
+
+        // UI Elements
+        const form = document.getElementById('site-form');
+        const submitButton = document.getElementById('submit-button');
+        const nextIndexSpan = document.getElementById('next-index');
+        const queueIndexInput = document.getElementById('queue-index-input');
+        const statusMessage = document.getElementById('status-message');
+
+        let db;
+        // FIX: Force the use of the correct project ID for pathing
+        const currentAppId = firebaseConfig.projectId; 
+        const QUEUE_PATH = `artifacts/${currentAppId}/public/data/site_queue`;
+
+        // --- Utility Functions ---
+        function setStatus(message, type = 'success') {
+            statusMessage.textContent = message;
+            statusMessage.className = `mt-8 p-5 rounded-xl font-semibold block ${
+                type === 'success' ? 'bg-green-500/20 text-green-300 border border-green-500/30' : 'bg-red-500/20 text-red-300 border border-red-500/30'
+            }`;
+            statusMessage.scrollIntoView({ behavior: 'smooth' });
+            setTimeout(() => statusMessage.classList.add('hidden'), 5000);
+        }
+
+        async function getNextQueueIndex() {
+            try {
+                // Fetch all documents to find the max index in memory (avoids Firestore index requirement)
+                const q = collection(db, QUEUE_PATH);
+                const querySnapshot = await getDocs(q);
+                
+                let maxIndex = 0;
+                querySnapshot.forEach(doc => {
+                    const data = doc.data();
+                    // Ensure we only check valid numbers
+                    if (data.queueIndex && typeof data.queueIndex === 'number' && data.queueIndex > maxIndex) {
+                        maxIndex = data.queueIndex;
+                    }
+                });
+
+                const nextIndex = maxIndex + 1;
+                
+                nextIndexSpan.textContent = nextIndex;
+                queueIndexInput.value = nextIndex;
+                submitButton.disabled = false;
+
+            } catch (error) {
+                console.error("Error fetching max queue index:", error);
+                nextIndexSpan.textContent = 'Error';
+                setStatus("Failed to load queue index. Check console. Did you publish the Security Rules?", 'error');
+                submitButton.disabled = true;
+            }
+        }
+
+        // --- Form Submission Handler ---
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            submitButton.disabled = true;
+            submitButton.textContent = 'Adding...';
+
+            const formData = new FormData(form);
+            const data = {
+                title: formData.get('title'),
+                url: formData.get('url'),
+                note: formData.get('note'),
+                // Ensure queueIndex is stored as a number
+                queueIndex: Number(formData.get('queueIndex')), 
+                createdAt: new Date().toISOString()
+            };
+
+            if (!data.queueIndex || data.queueIndex < 1) {
+                setStatus("Invalid queue index. Reload the page.", 'error');
+                submitButton.textContent = 'Add Site to Queue';
+                return;
+            }
+
+            try {
+                const docRef = await addDoc(collection(db, QUEUE_PATH), data);
+                setStatus(`✅ Site added! Queue Index: ${data.queueIndex}. Document ID: ${docRef.id}`);
+                
+                // Reset form fields except for the hidden index
+                form.reset();
+                
+                // Recalculate next index immediately
+                await getNextQueueIndex();
+                
+            } catch (error) {
+                console.error("Error adding document:", error);
+                // Write access is likely missing. Remind user of rules.
+                setStatus(`❌ Failed to add site. Did you publish Security Rules to allow writes? Error: ${error.message}`, 'error');
+            } finally {
+                submitButton.disabled = false;
+                submitButton.textContent = 'Add Site to Queue';
+            }
+        });
+
+        // --- Main Initialization (Anonymous function to prevent declaration conflict) ---
+        window.onload = async () => {
+            if (Object.keys(firebaseConfig).length === 0 || !firebaseConfig.projectId) {
+                setStatus("Firebase configuration is missing.", 'error');
+                return;
+            }
+
+            try {
+                // setLogLevel('Debug'); // Uncomment for debugging
+                const app = initializeApp(firebaseConfig);
+                db = getFirestore(app);
+                const auth = getAuth(app);
+
+                // Authenticate (required for write access)
+                if (initialAuthToken) {
+                    await signInWithCustomToken(auth, initialAuthToken);
+                } else {
+                    await signInAnonymously(auth);
+                }
+                
+                // This call attempts to read the existing queue, which triggers the permission error
+                await getNextQueueIndex();
+
+            } catch (error) {
+                console.error("Initialization failed:", error);
+                setStatus("Authentication failed. Check your Firebase credentials and Security Rules.", 'error');
+            }
+        }
+    </script>
+</body>
+</html>

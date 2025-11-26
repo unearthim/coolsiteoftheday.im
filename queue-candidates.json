@@ -1,0 +1,102 @@
+[
+  {
+    "title": "The Yesterweb",
+    "url": "https://yesterweb.org/",
+    "note": "A community dedicated to reclaiming the creative, non-commercial internet. A manifesto for the small web, complete with resources for building your own corner of the old net."
+  },
+  {
+    "title": "Hundred Rabbits",
+    "url": "https://100r.co/",
+    "note": "Two artists living on a sailboat, creating low-power, offline-first tools and games. Their entire digital practice runs on solar power. A beautiful example of sustainable, intentional computing."
+  },
+  {
+    "title": "Brutalist Websites",
+    "url": "https://brutalistwebsites.com/",
+    "note": "A curated collection of websites embracing raw, unpolished design. No smooth gradients or animations—just pure, structural honesty. The anti-portfolio."
+  },
+  {
+    "title": "Webcurios",
+    "url": "https://webcurios.co.uk/",
+    "note": "Matt Muir's weekly dispatch of the web's weird underbelly. Every Friday, a lovingly-curated list of the strange, fascinating, and overlooked corners of the internet."
+  },
+  {
+    "title": "The Marginalian",
+    "url": "https://www.themarginalian.org/",
+    "note": "Maria Popova's longstanding meditation on what it means to live a meaningful life. Essays on literature, philosophy, science, and art. The internet's most beautiful weekly newsletter."
+  },
+  {
+    "title": "Kicks Condor",
+    "url": "https://www.kickscondor.com/",
+    "note": "A hand-coded wiki of hypertext essays, link collections, and meditations on the small web. Kicks Condor is part archivist, part poet—chronicling the indie web with genuine affection."
+  },
+  {
+    "title": "Low-Tech Magazine",
+    "url": "https://solar.lowtechmagazine.com/",
+    "note": "A solar-powered, low-bandwidth magazine about forgotten technologies and sustainable living. When the sun sets, the website goes offline. Design as philosophy."
+  },
+  {
+    "title": "Every Noise at Once",
+    "url": "https://everynoise.com/",
+    "note": "A computationally generated scatter-plot of every music genre known to Spotify. Click a word, hear a sound. A mesmerizing, overwhelming map of human musical expression."
+  },
+  {
+    "title": "The Museum of Obsolete Media",
+    "url": "https://obsoletemedia.org/",
+    "note": "A comprehensive archive of dead formats—from wax cylinders to Zip disks. Each entry documents the rise, fall, and technical specs of media we've left behind."
+  },
+  {
+    "title": "Radio Garden",
+    "url": "http://radio.garden/",
+    "note": "Spin a globe and listen to live radio from anywhere on Earth. London in the morning, Tokyo at night. A reminder that the world is vast and full of voices."
+  },
+  {
+    "title": "The Pudding",
+    "url": "https://pudding.cool/",
+    "note": "Visual essays that make data feel human. Topics range from the linguistics of pop music to the representation of women in film. Journalism as interactive art."
+  },
+  {
+    "title": "Atlas Obscura",
+    "url": "https://www.atlasobscura.com/",
+    "note": "A guide to the world's hidden wonders—abandoned places, strange rituals, obscure museums. Travel writing for people who think the Eiffel Tower is boring."
+  },
+  {
+    "title": "Folksonomy",
+    "url": "https://www.folksonomy.co/",
+    "note": "A taxonomy of internet subcultures, memes, and phenomena. An attempt to catalog the chaos. Each entry is written with academic seriousness and genuine curiosity."
+  },
+  {
+    "title": "Are.na",
+    "url": "https://www.are.na/",
+    "note": "A platform for collaborative research and mood-boarding. Not social media—more like a shared library where ideas accumulate slowly, deliberately, and beautifully."
+  },
+  {
+    "title": "The HTML Review",
+    "url": "https://thehtml.review/",
+    "note": "A journal of literature as algorithmic systems. Each issue is a single webpage exploring poetics, code, and constraint-based writing. Pure digital literature."
+  },
+  {
+    "title": "Hacker News",
+    "url": "https://news.ycombinator.com/",
+    "note": "The last great forum. Minimalist design, no downvotes on submissions, and a culture of thoughtful, civil discussion. A relic of Web 1.0 values in a Web 3.0 world."
+  },
+  {
+    "title": "Wiby",
+    "url": "https://wiby.me/",
+    "note": "A search engine for the old web. Wiby only indexes lightweight, non-commercial, text-based sites. It's a time machine to 1997, when the web was weird and wonderful."
+  },
+  {
+    "title": "Geocities-izer",
+    "url": "https://www.wonder-tonic.com/geocitiesizer/",
+    "note": "Turn any modern website into a garish GeoCities throwback—complete with tiled backgrounds, Comic Sans, and under-construction GIFs. A reminder of where we came from."
+  },
+  {
+    "title": "Cameron's World",
+    "url": "https://www.cameronsworld.net/",
+    "note": "A web-collage of text and images excavated from the buried neighbourhoods of GeoCities. A digital monument to the web's most maligned aesthetic era."
+  },
+  {
+    "title": "Internet Artifacts",
+    "url": "https://neal.fun/internet-artifacts/",
+    "note": "A scrollable timeline of the internet's most iconic moments—from the first webcam to the first tweet. Each artifact is a portal to a different era of digital culture."
+  }
+]

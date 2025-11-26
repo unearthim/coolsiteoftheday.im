@@ -74,6 +74,12 @@
             text-shadow: 0 0 40px rgba(139, 92, 246, 0.5);
         }
         
+        .section-divider {
+            height: 1px;
+            background: linear-gradient(to right, transparent, rgba(139, 92, 246, 0.3), transparent);
+            margin: 2rem 0;
+        }
+        
         input, textarea {
             background: rgba(15, 23, 42, 0.6);
             color: #f3f4f6 !important;
@@ -119,6 +125,32 @@
             </div>
             <p class="text-slate-400 text-lg">Add new entries to the site queue.</p>
         </header>
+
+        <!-- Bulk Upload Section -->
+        <div class="glass-morphism rounded-xl p-6 mb-8 border border-purple-500/20">
+            <h2 class="text-xl font-bold text-white mb-4 flex items-center">
+                <svg class="w-6 h-6 mr-2 text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"></path>
+                </svg>
+                Bulk Upload (JSON)
+            </h2>
+            <p class="text-slate-400 text-sm mb-4">Upload a JSON file with multiple sites at once. Format: <code class="text-purple-300 bg-slate-900/50 px-2 py-1 rounded">[{"title": "...", "url": "...", "note": "..."}]</code></p>
+            
+            <div class="flex flex-col sm:flex-row gap-4">
+                <input type="file" id="bulk-upload-input" accept=".json" 
+                       class="flex-1 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:bg-purple-600 file:text-white file:font-semibold file:cursor-pointer hover:file:bg-purple-700 file:transition-colors">
+                <button type="button" id="bulk-upload-button" 
+                        class="px-6 py-3 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white font-bold rounded-xl shadow-lg transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed transform hover:scale-[1.02]">
+                    Upload Queue
+                </button>
+            </div>
+            
+            <div id="bulk-status" class="mt-4 hidden"></div>
+        </div>
+
+        <div class="section-divider"></div>
+
+        <h2 class="text-2xl font-bold text-white mb-6">Add Single Site</h2>
 
         <form id="site-form" class="space-y-6">
             
@@ -196,6 +228,11 @@
         const nextIndexSpan = document.getElementById('next-index');
         const queueIndexInput = document.getElementById('queue-index-input');
         const statusMessage = document.getElementById('status-message');
+        
+        // Bulk upload elements
+        const bulkUploadInput = document.getElementById('bulk-upload-input');
+        const bulkUploadButton = document.getElementById('bulk-upload-button');
+        const bulkStatus = document.getElementById('bulk-status');
 
         let db;
         // FIX: Force the use of the correct project ID for pathing
@@ -210,6 +247,14 @@
             }`;
             statusMessage.scrollIntoView({ behavior: 'smooth' });
             setTimeout(() => statusMessage.classList.add('hidden'), 5000);
+        }
+        
+        function setBulkStatus(message, type = 'success') {
+            bulkStatus.textContent = message;
+            bulkStatus.className = `mt-4 p-5 rounded-xl font-semibold block ${
+                type === 'success' ? 'bg-green-500/20 text-green-300 border border-green-500/30' : 'bg-red-500/20 text-red-300 border border-red-500/30'
+            }`;
+            bulkStatus.classList.remove('hidden');
         }
 
         async function getNextQueueIndex() {
@@ -281,6 +326,79 @@
             } finally {
                 submitButton.disabled = false;
                 submitButton.textContent = 'Add Site to Queue';
+            }
+        });
+
+        // --- Bulk Upload Handler ---
+        bulkUploadButton.addEventListener('click', async () => {
+            const file = bulkUploadInput.files[0];
+            if (!file) {
+                setBulkStatus('Please select a JSON file first.', 'error');
+                return;
+            }
+
+            try {
+                bulkUploadButton.disabled = true;
+                bulkUploadButton.textContent = 'Uploading...';
+                
+                // Read the file
+                const text = await file.text();
+                const sites = JSON.parse(text);
+                
+                if (!Array.isArray(sites)) {
+                    throw new Error('JSON must be an array of site objects');
+                }
+                
+                // Validate structure
+                for (const site of sites) {
+                    if (!site.title || !site.url || !site.note) {
+                        throw new Error('Each site must have title, url, and note fields');
+                    }
+                }
+                
+                setBulkStatus(`Uploading ${sites.length} sites...`, 'success');
+                
+                // Get starting queue index
+                let currentIndex = await getNextQueueIndex();
+                
+                // Get collection reference
+                const queueCollectionRef = collection(db, QUEUE_PATH);
+                
+                // Upload each site
+                const results = [];
+                for (let i = 0; i < sites.length; i++) {
+                    const site = sites[i];
+                    try {
+                        await addDoc(queueCollectionRef, {
+                            title: site.title,
+                            url: site.url,
+                            note: site.note,
+                            queueIndex: currentIndex,
+                            createdAt: new Date().toISOString()
+                        });
+                        results.push(`✓ ${site.title} (Index ${currentIndex})`);
+                        currentIndex++;
+                    } catch (err) {
+                        results.push(`✗ ${site.title}: ${err.message}`);
+                    }
+                }
+                
+                // Show results
+                setBulkStatus(`Upload complete!\n\n${results.join('\n')}`, 'success');
+                bulkStatus.style.whiteSpace = 'pre-line';
+                
+                // Clear file input
+                bulkUploadInput.value = '';
+                
+                // Refresh the next index display
+                await displayNextQueueIndex();
+                
+            } catch (error) {
+                console.error('Bulk upload error:', error);
+                setBulkStatus(`Upload failed: ${error.message}`, 'error');
+            } finally {
+                bulkUploadButton.disabled = false;
+                bulkUploadButton.textContent = 'Upload Queue';
             }
         });
 

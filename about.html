@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About | Cool Site of the Day</title>
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        'sans': ['Inter', 'sans-serif'],
+                        'mono': ['Space Mono', 'monospace'],
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #0a0e27;
+            background-attachment: fixed;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+        
+        /* Ambient background animation */
+        .ambient-light {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            pointer-events: none;
+            z-index: -1;
+            background-image: 
+                radial-gradient(at 20% 30%, rgba(88, 28, 135, 0.2) 0px, transparent 50%),
+                radial-gradient(at 80% 70%, rgba(37, 99, 235, 0.2) 0px, transparent 50%),
+                radial-gradient(at 50% 50%, rgba(109, 40, 217, 0.15) 0px, transparent 50%);
+            animation: ambient-drift 10s ease-in-out infinite alternate;
+        }
+
+        @keyframes ambient-drift {
+            0% { transform: scale(1); }
+            100% { transform: scale(1.1); }
+        }
+        
+        .glass-morphism {
+            background: rgba(15, 23, 42, 0.6);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+        }
+        
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-8px); }
+            100% { transform: translateY(0px); }
+        }
+
+        .float-animation {
+            animation: float 6s ease-in-out infinite;
+        }
+        
+        .text-glow {
+            text-shadow: 0 0 40px rgba(139, 92, 246, 0.5);
+        }
+        
+        .section-divider {
+            height: 1px;
+            background: linear-gradient(to right, transparent, rgba(139, 92, 246, 0.3), transparent);
+            margin: 3rem 0;
+        }
+    </style>
+</head>
+<body>
+    <!-- Ambient background -->
+    <div class="ambient-light"></div>
+    
+    <!-- Main content -->
+    <div class="min-h-screen py-16 px-4">
+        
+        <!-- Header -->
+        <header class="text-center mb-16">
+            <a href="index.html" class="inline-block float-animation mb-6">
+                <svg width="60" height="60" viewBox="0 0 24 24" fill="none" stroke="currentColor" class="text-purple-400 hover:text-purple-300 transition-colors">
+                    <path d="M12 3l1.912 5.813a2 2 0 001.275 1.275L21 12l-5.813 1.912a2 2 0 00-1.275 1.275L12 21l-1.912-5.813a2 2 0 00-1.275-1.275L3 12l5.813-1.912a2 2 0 001.275-1.275L12 3z" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+            </a>
+            <h1 class="text-5xl font-bold text-white mb-4 text-glow">About This Monument</h1>
+            <p class="text-gray-300 max-w-2xl mx-auto text-lg">
+                A digital archaeology project reviving the spirit of web curation
+            </p>
+        </header>
+        
+        <!-- Content Container -->
+        <div class="max-w-4xl mx-auto space-y-12">
+            
+            <!-- Origin Story -->
+            <section class="glass-morphism rounded-2xl p-8 sm:p-12 border border-purple-500/20">
+                <h2 class="text-3xl font-bold text-white mb-6 flex items-center">
+                    <svg class="w-8 h-8 mr-3 text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                    </svg>
+                    The Original Cool Site of the Day
+                </h2>
+                <div class="text-gray-300 space-y-4 leading-relaxed">
+                    <p>
+                        In <strong class="text-white">1994</strong>, Glenn Davis launched <em>Cool Site of the Day</em>, one of the web's first curatorial projects. 
+                        Every day, he handpicked a single website that represented the best of web design, creativity, and innovation.
+                    </p>
+                    <p>
+                        At a time when search engines were primitive and social media didn't exist, CSOTD was a vital discovery mechanism. 
+                        Being featured could bring <strong class="text-purple-300">thousands of visitors overnight</strong>. It was the web's first taste of viral fame.
+                    </p>
+                    <p>
+                        The project ran for over a decade, featuring thousands of sites and shaping web culture during its most experimental era. 
+                        It celebrated the weird, the artistic, and the pioneering—everything that made the early web magical.
+                    </p>
+                    <p class="text-slate-400 italic">
+                        The original CSOTD ended in 2006, but its spirit lives on in archives and the memories of those who experienced the web's golden age.
+                    </p>
+                </div>
+            </section>
+
+            <div class="section-divider"></div>
+
+            <!-- The Revival -->
+            <section class="glass-morphism rounded-2xl p-8 sm:p-12 border border-purple-500/20">
+                <h2 class="text-3xl font-bold text-white mb-6 flex items-center">
+                    <svg class="w-8 h-8 mr-3 text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+                    </svg>
+                    Why Revive It Now?
+                </h2>
+                <div class="text-gray-300 space-y-4 leading-relaxed">
+                    <p>
+                        The modern web is dominated by algorithms, infinite feeds, and platforms that homogenize creativity. 
+                        Independent sites—the kind that made the early web vibrant—are harder to discover than ever.
+                    </p>
+                    <p>
+                        This revival is an act of <strong class="text-purple-300">digital archaeology</strong>: unearthing, preserving, and celebrating 
+                        the independent web. It's a monument to sites that dare to be different, beautifully crafted, and unapologetically niche.
+                    </p>
+                    <p>
+                        Unlike the algorithm, a curator has taste, context, and intention. This project embraces that human element—each site 
+                        is chosen not because it's popular, but because it's <em class="text-white">cool</em>.
+                    </p>
+                </div>
+            </section>
+
+            <div class="section-divider"></div>
+
+            <!-- How It Works -->
+            <section class="glass-morphism rounded-2xl p-8 sm:p-12 border border-purple-500/20">
+                <h2 class="text-3xl font-bold text-white mb-6 flex items-center">
+                    <svg class="w-8 h-8 mr-3 text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path>
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                    </svg>
+                    How This Monument Works
+                </h2>
+                <div class="text-gray-300 space-y-4 leading-relaxed">
+                    <p>
+                        This project uses an <strong class="text-white">automated queue system</strong> powered by Firebase. Sites are curated 
+                        in advance and queued for daily rotation at midnight Pacific Time.
+                    </p>
+                    <div class="bg-slate-900/50 rounded-lg p-6 border border-purple-500/10 my-6">
+                        <h3 class="text-xl font-semibold text-purple-300 mb-3">The Process:</h3>
+                        <ol class="space-y-2 list-decimal list-inside text-slate-300">
+                            <li>Sites are added to the queue via the admin console</li>
+                            <li>Each entry includes a URL, title, and curatorial note</li>
+                            <li>At midnight PT, a Cloud Function rotates to the next site</li>
+                            <li>Previous sites are archived with screenshots for posterity</li>
+                            <li>The cycle continues, celebrating a new site every 24 hours</li>
+                        </ol>
+                    </div>
+                    <p>
+                        Every featured site receives a <strong class="text-purple-300">digital badge</strong> they can embed on their own site—
+                        a nod to the classic web tradition of 88x31 buttons and award badges.
+                    </p>
+                </div>
+            </section>
+
+            <div class="section-divider"></div>
+
+            <!-- The Philosophy -->
+            <section class="glass-morphism rounded-2xl p-8 sm:p-12 border border-purple-500/20">
+                <h2 class="text-3xl font-bold text-white mb-6 flex items-center">
+                    <svg class="w-8 h-8 mr-3 text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"></path>
+                    </svg>
+                    Curatorial Philosophy
+                </h2>
+                <div class="text-gray-300 space-y-4 leading-relaxed">
+                    <p>
+                        What makes a site "cool"? It's not about traffic, followers, or SEO. It's about:
+                    </p>
+                    <ul class="space-y-3 my-6">
+                        <li class="flex items-start">
+                            <span class="text-purple-400 mr-3 text-xl">✦</span>
+                            <span><strong class="text-white">Craft</strong> — Sites that show care in design, interaction, or content</span>
+                        </li>
+                        <li class="flex items-start">
+                            <span class="text-purple-400 mr-3 text-xl">✦</span>
+                            <span><strong class="text-white">Experimentation</strong> — Projects pushing boundaries of what the web can be</span>
+                        </li>
+                        <li class="flex items-start">
+                            <span class="text-purple-400 mr-3 text-xl">✦</span>
+                            <span><strong class="text-white">Independence</strong> — Personal sites, passion projects, and niche communities</span>
+                        </li>
+                        <li class="flex items-start">
+                            <span class="text-purple-400 mr-3 text-xl">✦</span>
+                            <span><strong class="text-white">Spirit</strong> — Sites that capture the playful, weird, creative soul of the web</span>
+                        </li>
+                    </ul>
+                    <p class="text-slate-400 italic">
+                        This is curation through the lens of a digital archaeologist—preserving not what's viral, but what's vital.
+                    </p>
+                </div>
+            </section>
+
+            <div class="section-divider"></div>
+
+            <!-- Credits & Links -->
+            <section class="glass-morphism rounded-2xl p-8 sm:p-12 border border-purple-500/20">
+                <h2 class="text-3xl font-bold text-white mb-6 flex items-center">
+                    <svg class="w-8 h-8 mr-3 text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1"></path>
+                    </svg>
+                    Artifact Credits
+                </h2>
+                <div class="text-gray-300 space-y-4 leading-relaxed">
+                    <p>
+                        <strong class="text-white">Original Cool Site of the Day:</strong> Created by Glenn Davis (1994-2006)<br>
+                        <a href="https://web.archive.org/web/19970101000000*/http://cool.infi.net/" target="_blank" rel="noopener" 
+                           class="text-purple-400 hover:text-purple-300 transition-colors underline">
+                            View in the Internet Archive
+                        </a>
+                    </p>
+                    <p>
+                        <strong class="text-white">This Revival:</strong> Curated and preserved by 
+                        <a href="https://unearth.im" target="_blank" rel="noopener" 
+                           class="text-purple-400 hover:text-purple-300 transition-colors underline">
+                            unearth.im
+                        </a>
+                    </p>
+                    <p>
+                        <strong class="text-white">Built With:</strong> Firebase, Firestore, Cloud Functions, and a deep reverence for web history
+                    </p>
+                </div>
+
+                <!-- CTA Buttons -->
+                <div class="mt-8 flex flex-col sm:flex-row gap-4">
+                    <a href="index.html" 
+                       class="flex-1 text-center py-4 px-6 bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 text-white font-bold rounded-xl shadow-lg transition-all duration-200 transform hover:scale-105">
+                        View Today's Site
+                    </a>
+                    <a href="award.html" 
+                       class="flex-1 text-center py-4 px-6 glass-morphism border border-purple-500/30 hover:border-purple-400/50 text-white font-bold rounded-xl shadow-lg transition-all duration-200 transform hover:scale-105">
+                        Get Your Badge
+                    </a>
+                </div>
+            </section>
+
+        </div>
+
+        <!-- Footer -->
+        <footer class="mt-20 text-center">
+            <p class="text-slate-600 text-sm font-mono mb-2">
+                © <span id="current-year"></span> coolsiteoftheday.im
+            </p>
+            <p class="text-slate-700 text-xs">
+                Artifact unearthed and preserved by <a href="https://unearth.im" target="_blank" rel="noopener" class="hover:text-purple-400 transition-colors">unearth.im</a>
+            </p>
+        </footer>
+    </div>
+
+    <script>
+        // Set current year
+        document.getElementById('current-year').textContent = new Date().getFullYear();
+    </script>
+</body>
+</html>

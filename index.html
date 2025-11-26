@@ -143,6 +143,37 @@
             -webkit-box-orient: vertical;
             overflow: hidden;
         }
+        
+        /* Screenshot hover effects */
+        #screenshot-container {
+            position: relative;
+            overflow: hidden;
+        }
+        
+        #screenshot-container img {
+            transition: transform 0.6s ease;
+        }
+        
+        #screenshot-container:hover img {
+            transform: scale(1.05);
+        }
+        
+        /* Ripple effect */
+        .ripple {
+            position: absolute;
+            border-radius: 50%;
+            background: rgba(139, 92, 246, 0.3);
+            pointer-events: none;
+            transform: scale(0);
+            animation: ripple-animation 0.8s ease-out;
+        }
+        
+        @keyframes ripple-animation {
+            to {
+                transform: scale(4);
+                opacity: 0;
+            }
+        }
     </style>
 </head>
 <body class="antialiased">
@@ -178,7 +209,7 @@
                     <div class="text-left lg:text-right">
                         <time id="site-date" class="text-sm font-mono text-slate-600 mb-2 block">Loading...</time>
                         <a id="site-link" href="#" target="_blank" rel="noopener noreferrer" class="group inline-flex items-center space-x-2 transition-all duration-300">
-                            <span id="site-title" class="text-xl lg:text-2xl font-black tracking-tighter text-slate-100 group-hover:text-transparent group-hover:bg-clip-text group-hover:bg-gradient-to-r group-hover:from-purple-300 group-hover:to-blue-300">
+                            <span id="site-title" class="text-2xl lg:text-3xl font-black tracking-tighter text-slate-100 group-hover:text-transparent group-hover:bg-clip-text group-hover:bg-gradient-to-r group-hover:from-purple-300 group-hover:to-blue-300">
                                 Site Title
                             </span>
                             <svg class="w-5 h-5 text-slate-400 group-hover:text-white group-hover:rotate-45 transition-all duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -208,8 +239,13 @@
             <p class="text-slate-600 text-sm font-mono mb-2">
                 © <span id="current-year"></span> coolsiteoftheday.im
             </p>
+            <p class="text-slate-700 text-xs mb-3">
+                Artifact unearthed and preserved by <a href="https://unearth.im" target="_blank" rel="noopener" class="hover:text-purple-400 transition-colors">unearth.im</a>
+            </p>
             <p class="text-slate-700 text-xs">
-                A digital monument powered by Firebase & automated curation
+                <a href="about.html" class="hover:text-purple-400 transition-colors">About</a>
+                <span class="mx-2">•</span>
+                <a href="award.html" class="hover:text-purple-400 transition-colors">Badges</a>
             </p>
         </footer>
     </div>
@@ -353,6 +389,23 @@
                                 onerror="this.onerror=null; this.src='data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 width=%27100%27 height=%27100%27%3E%3Crect fill=%27%23111827%27 width=%27100%27 height=%27100%27/%3E%3Ctext fill=%27%23475569%27 font-family=%27monospace%27 font-size=%2714%27 x=%2750%%27 y=%2750%%27 text-anchor=%27middle%27 dominant-baseline=%27middle%27%3EScreenshot unavailable%3C/text%3E%3C/svg%3E';"
                             />
                         `;
+                        
+                        // Add ripple effect on click
+                        screenshotContainer.addEventListener('click', function(e) {
+                            const rect = this.getBoundingClientRect();
+                            const x = e.clientX - rect.left;
+                            const y = e.clientY - rect.top;
+                            
+                            const ripple = document.createElement('div');
+                            ripple.className = 'ripple';
+                            ripple.style.width = ripple.style.height = '100px';
+                            ripple.style.left = `${x - 50}px`;
+                            ripple.style.top = `${y - 50}px`;
+                            
+                            this.appendChild(ripple);
+                            
+                            setTimeout(() => ripple.remove(), 800);
+                        });
                         
                         // Show main content, hide loading
                         loadingState.classList.add('hidden');

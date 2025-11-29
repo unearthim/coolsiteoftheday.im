@@ -88,33 +88,47 @@ exports.coolSiteRotator = onSchedule({
 
             const nextSiteData = nextSiteDoc;
 
-            // 4. Update the 'today' document
+            // 4. Archive the OLD site BEFORE updating to the new one
+            if (todayDoc.exists) {
+                const oldSiteData = todayDoc.data();
+                console.log(`🗄️ Archiving old site: ${oldSiteData.siteTitle} (date: ${oldSiteData.date}, index: ${oldSiteData.index})`);
+                
+                const archivePayload = {
+                    siteUrl: oldSiteData.siteUrl,
+                    siteTitle: oldSiteData.siteTitle,
+                    curatorNote: oldSiteData.curatorNote,
+                    date: oldSiteData.date,
+                    dateString: oldSiteData.date,
+                    index: oldSiteData.index,
+                    queueId: oldSiteData.queueId,
+                    archivedAt: admin.firestore.FieldValue.serverTimestamp(),
+                    timestamp: new Date(oldSiteData.date).getTime() // Use the old date for sorting
+                };
+                
+                // Use the old date as document ID to prevent duplicates
+                const archiveDocId = oldSiteData.date;
+                await archiveCollectionRef.doc(archiveDocId).set(archivePayload, { merge: true });
+                console.log(`📁 Archived to daily_sites_archive/${archiveDocId}`);
+            } else {
+                console.log(`ℹ️ No previous site to archive (first run)`);
+            }
+
+            // 5. Prepare the NEW site data (today's date)
+            const todayDate = new Date().toISOString().split('T')[0]; // YYYY-MM-DD
             const updatePayload = {
                 siteUrl: nextSiteData.url,
                 siteTitle: nextSiteData.title,
                 curatorNote: nextSiteData.note || 'No note provided for this feature.',
-                date: new Date().toISOString().split('T')[0], // YYYY-MM-DD
-                dateString: new Date().toISOString().split('T')[0], // For consistency with archive queries
+                date: todayDate,
+                dateString: todayDate,
                 index: nextIndex,
                 queueId: nextSiteData.id 
             };
 
-            // Write to today document
+            // 6. Write to today document
             await todayDocRef.set(updatePayload, { merge: true });
 
-            // 5. Archive this site for historical record
-            const archivePayload = {
-                ...updatePayload,
-                archivedAt: admin.firestore.FieldValue.serverTimestamp(),
-                timestamp: new Date().getTime() // For sorting
-            };
-            
-            // Use date as document ID to prevent duplicates
-            const archiveDocId = updatePayload.date;
-            await archiveCollectionRef.doc(archiveDocId).set(archivePayload, { merge: true });
-
             console.log(`✅ Daily update successful. New site index: ${nextIndex} (${nextSiteData.title})`);
-            console.log(`📁 Archived to daily_sites_archive/${archiveDocId}`);
             return null;
 
         } catch (error) {

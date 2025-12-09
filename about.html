@@ -1,6 +1,69 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "WebPage",
+          "@id": "https://coolsiteoftheday.im/about.html#content",
+          "url": "https://coolsiteoftheday.im/about.html",
+          "name": "About | Cool Site of the Day",
+          "description": "Learn about the Cool Site of the Day project and its mission to preserve and celebrate groundbreaking web design.",
+          "inLanguage": "en-US",
+          "datePublished": "2024-12-01",
+          "publisher": { "@id": "https://unearth.im/#organization" },
+          "isPartOf": { "@id": "https://coolsiteoftheday.im/#website" },
+          "author": [
+            { "@id": "https://josiest.com/#person" },
+            { "@id": "https://felixvelas.co/#person" }
+          ]
+        },
+        {
+          "@type": "WebSite",
+          "@id": "https://coolsiteoftheday.im/#website",
+          "url": "https://coolsiteoftheday.im",
+          "name": "Cool Site of the Day",
+          "publisher": { "@id": "https://unearth.im/#organization" }
+        },
+        {
+          "@type": "Organization",
+          "@id": "https://unearth.im/#organization",
+          "name": "unearth.im",
+          "url": "https://unearth.im",
+          "logo": {
+            "@type": "ImageObject",
+            "url": "https://unearth.im/favicon-32x32.png"
+          },
+          "foundingDate": "2024",
+          "sameAs": [
+            "https://twitter.com/unearthim",
+            "https://github.com/unearthim"
+          ]
+        },
+        {
+          "@type": "Person",
+          "@id": "https://josiest.com/#person",
+          "name": "Josie Jefferson",
+          "url": "https://josiest.com",
+          "jobTitle": "Digital Archaeologist & Trust Architect",
+          "affiliation": { "@id": "https://unearth.im/#organization" },
+          "sameAs": ["https://notjojo.im"]
+        },
+        {
+          "@type": "Person",
+          "@id": "https://felixvelas.co/#person",
+          "name": "Felix Velasco",
+          "url": "https://felixvelas.co",
+          "jobTitle": "Trust Architect & Digital Archaeologist",
+          "affiliation": { "@id": "https://unearth.im/#organization" },
+          "sameAs": ["https://www.linkedin.com/in/felix-velasco-b793015"]
+        }
+      ]
+    }
+    </script>
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>About | Cool Site of the Day</title>
@@ -315,7 +378,9 @@
                 © <span id="current-year"></span> coolsiteoftheday.im
             </p>
             <p class="text-slate-700 text-xs">
-                Artifact unearthed and preserved by <a href="https://unearth.im" target="_blank" rel="noopener" class="hover:text-purple-400 transition-colors">unearth.im</a>
+                <small>
+                    a <b><a href="https://sentientification.com" target="_blank" rel="noopener" class="hover:text-purple-400 transition-colors">liminal mind meld</a></b> collaboration: digital monument by <b><a href="https://unearth.im" target="_blank" rel="noopener" class="hover:text-purple-400 transition-colors">unearth.im</a></b> | <b><a href="https://archaeobytology.org" target="_blank" rel="noopener" class="hover:text-purple-400 transition-colors">archive & anvil</a></b>
+                </small>
             </p>
         </footer>
     </div>
